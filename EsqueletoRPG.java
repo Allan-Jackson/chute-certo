@@ -31,32 +31,33 @@ public class EsqueletoRPG {
 	 * com o logo e o menu inicial.
 	 */
 	public static void exibirTelaTitulo() {
-		exibirLogo();
-		exibirMenuTitulo();
+		boolean continuarNoMenu = true;
 
-		Scanner entrada = new Scanner(System.in);
-		System.out.print("Escolha: ");
+		while(continuarNoMenu) {
+			exibirLogo();
+			exibirMenuTitulo();
 
-		//TODO: criar método para realizar a leitura de dados do usuário com a devida validação e tratamento de erros
-		int op = entrada.nextInt();
+			Scanner entrada = new Scanner(System.in);
+			System.out.print("Escolha: ");
 
-		limparTela();
+			//TODO: criar método para realizar a leitura de dados do usuário com a devida validação e tratamento de erros
+			int op = entrada.nextInt();
 
-		switch(op) {
-			case 1:
-				/*TODO: INICIAR JOGO*/
-				iniciarJogo();
-				break;
-			case 2:
-				exibirRegras();
-				exibirTelaTitulo();
-				break;
-			case 3:
-				System.out.println("\n\nAté mais!\n\n");
-				System.exit(0);
-				break;
-			default:
-				exibirTelaTitulo();
+			limparTela();
+
+			switch (op) {
+				case 1:
+					iniciarJogo();
+					continuarNoMenu = false;
+					break;
+				case 2:
+					exibirRegras();
+					break;
+				case 3:
+					System.out.println("\n\nAté mais!\n\n");
+					System.exit(0);
+					break;
+			}
 		}
 	}
 
