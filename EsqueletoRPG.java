@@ -8,7 +8,19 @@ import java.util.Scanner;
 public class EsqueletoRPG {
 	
 	public static final int ALTURA_TELA = 30;
-	public static void exibirLogo() {
+
+	public static int numeroDesafio;
+	public static String perguntaDesafio;
+	public static String opcao1;
+	public static String opcao2;
+	public static String opcao3;
+	public static String opcao4;
+	public static int resposta = 2;
+
+	/**
+	 * Desenha na tela o título do jogo em ASCII Art
+	 */
+	public static void desenharLogo() {
 		System.out.println();
 		System.out.println("                        BY                        ");
 		System.out.println("         ALLAN JACKSON SILVA OLIVEIRA             ");
@@ -23,19 +35,19 @@ public class EsqueletoRPG {
 	}
 	
 	public static void main(String[] args) {
-		exibirTelaTitulo();
+		telaTitulo();
 	}
 
 	/**
 	 * Exibe a tela de título do jogo
 	 * com o logo e o menu inicial.
 	 */
-	public static void exibirTelaTitulo() {
+	public static void telaTitulo() {
 		boolean continuarNoMenu = true;
 
 		while(continuarNoMenu) {
-			exibirLogo();
-			exibirMenuTitulo();
+			desenharLogo();
+			desenharMenuTitulo();
 
 			Scanner entrada = new Scanner(System.in);
 			System.out.print("Escolha: ");
@@ -62,9 +74,9 @@ public class EsqueletoRPG {
 	}
 
 	/**
-	 * Exibe o MENU INICIAL com as opções para o usuário.
+	 * Desenha o MENU INICIAL com as opções para o usuário.
 	 */
-	public static void exibirMenuTitulo() {
+	public static void desenharMenuTitulo() {
 		System.out.println("\n-----------------------------------------------\n");
 		System.out.println("[1] -> Iniciar jogo");
 		System.out.println("[2] -> Ler regras");
@@ -85,43 +97,115 @@ public class EsqueletoRPG {
 
 	public static void iniciarJogo() {
 		introducao();
-		exibirDesafio1();
+		limparTela();
+		desafio1();
 	}
 
 	/**
 	 * Exibe a história introdutório do jogo
 	 */
 	public static void introducao() {
+		Scanner pause = new Scanner(System.in);
 		//TODO: desenvolver a história de introdução do jogo
 		System.out.println("Tudo começa com... o roteirista escrevendo a PORCARIA da história.\nFim da introdução!");
+
+		System.out.println("\nTecle ENTER para continuar...");
+		pause.nextLine();
+	}
+
+	/**
+	 * Desenha a pergunta e as alternativas para os
+	 * desafios do jogo.
+	 */
+	public static void desenharDesafio() {
+		System.out.println("DESAFIO " + numeroDesafio);
+		System.out.println("---------");
+		System.out.println(perguntaDesafio);
+		System.out.println("---------");
+		System.out.println("1) " + opcao1);
+		System.out.println("2) " + opcao2);
+		System.out.println("3) " + opcao3);
+		System.out.println("4) " + opcao4);
+		System.out.println();
 	}
 
 	/**
 	 * Exibe para o usuário o primeiro desafio do jogo
 	 */
-	public static void exibirDesafio1() {
-		String pergunta = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus interdum, tortor sed bibendum bibendum, arcu orci?";
-		String op1 = "Lorem ipsum 1";
-		String op2 = "Lorem ipsum 2";
-		String op3 = "Lorem ipsum 3";
-		String op4 = "Lorem ipsum 4";
+	public static void desafio1() {
+		numeroDesafio = 1;
+		perguntaDesafio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus interdum, tortor sed bibendum bibendum, arcu orci?";
 
-		System.out.println("DESAFIO 1");
-		System.out.println("---------");
-		System.out.println(pergunta);
-		System.out.println("---------");
-		System.out.println("1. " + op1);
-		System.out.println("2. " + op2);
-		System.out.println("3. " + op3);
-		System.out.println("4. " + op4);
-		System.out.println();
+		opcao1 = "Alternativa primeira";
+		opcao2 = "Alternativa segunda";
+		opcao3 = "Alternativa terceira";
+		opcao4 = "Alternativa quarta";
 
-		final int RESPOSTA = 2;
-		int op;
+		resposta = 2;
+
+
+		int escolha;
 		Scanner entrada = new Scanner(System.in);
+
 		boolean respostaValida = false;
 
 		do { //repete enquanto a resposta não for válida
+
+			desenharDesafio();
+
+			System.out.print("Diga sua resposta (ou 0 para regras): ");
+			escolha = entrada.nextInt();
+			entrada.nextLine(); //limpar o buffer
+
+			respostaValida = validarResposta(escolha);
+
+			if(!respostaValida){
+				System.out.println("Opção inválida!");
+			}else if(escolha == 0) {
+				limparTela();
+				exibirRegras();
+			}else if(!(escolha == resposta)) {
+				/*TODO: PERDE VIDA E VERIFICA SE DEU GAME OVER*/
+				System.out.println("Você sofreu um ataque por errar a resposta e perdeu uma vida!");
+				System.out.println("Vc tem X vidas restantes.\n");
+			}
+
+		}while(!respostaValida || !(escolha == resposta));
+
+		//passou do desafio com vitória
+		System.out.println();
+		System.out.println("Você completou a primeira missão com sucesso!");
+		System.out.println("Vamos para a próxima missão!");
+		System.out.println("Aperte enter para continuar...");
+		entrada.nextLine();
+
+		limparTela();
+		desafio2();
+	}
+
+	/**
+	 * Exibe para o usuário o segundo desafio do jogo
+	 */
+	public static void desafio2() {
+		numeroDesafio = 2;
+		perguntaDesafio = "Lorem ipsum SEGUNDO, consectetur adipiscing elit. Vivamus interdum, tortor sed bibendum bibendum, arcu orci?";
+
+		opcao1 = "Primeira alternativa";
+		opcao2 = "Segunda alternativa";
+		opcao3 = "Terceira alternativa";
+		opcao4 = "Quarta alternativa";
+
+		resposta = 4;
+
+		int op;
+		Scanner entrada = new Scanner(System.in);
+
+		boolean respostaValida = false;
+
+		do { //repete enquanto a resposta não for válida
+
+			desenharDesafio();
+
 			System.out.print("Diga sua resposta (ou 0 para regras): ");
 			op = entrada.nextInt();
 
@@ -129,16 +213,19 @@ public class EsqueletoRPG {
 
 			if(!respostaValida){
 				System.out.println("Opção inválida!");
-			}else if(!(op == RESPOSTA)) {
+			}else if(op == 0) {
+				limparTela();
+				exibirRegras();
+			}else if(!(op == resposta)) {
 				/*TODO: PERDE VIDA E VERIFICA SE DEU GAME OVER*/
 				System.out.println("Você sofreu um ataque por errar a resposta e perdeu uma vida!");
 				System.out.println("Vc tem X vidas restantes.\n");
 			}
 
-		}while(!respostaValida || !(op == RESPOSTA));
+		}while(!respostaValida || !(op == resposta));
 
 		//passou do desafio com vitória
-		System.out.println("Você completou a primeira missão com sucesso!");
+		System.out.println("Você completou a segunda missão com sucesso!");
 		System.out.println("Mas ainda não acabou, existem novos desafios pela frente!");
 		System.out.println("Continua...");
 	}
@@ -159,9 +246,11 @@ public class EsqueletoRPG {
 		System.out.println("3. Eis aí as regras:\nHAHAHAHAHAHAHA!");
 		System.out.println("4. Eis aí as regras:\nHAHAHAHAHAHAHA!");
 		System.out.println("\n\nEis aí as regras:\nHAHAHAHAHAHAHA!\n\n");
-		System.out.printf("Tecle ENTER para continuar...");
 
+		System.out.println("Tecle ENTER para continuar...");
 		pause.nextLine();
+
+		limparTela();
 	}
 
 	/**
@@ -170,6 +259,6 @@ public class EsqueletoRPG {
 	 * @return retorna true caso a resposta seja válida e false caso contrário
 	 */
 	public static boolean validarResposta(int resposta) {
-		return resposta > 0 && resposta <= 4;
+		return resposta >= 0 && resposta <= 4;
 	}
 }
