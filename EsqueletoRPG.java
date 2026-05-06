@@ -67,9 +67,7 @@ public class EsqueletoRPG {
 					exibirRegras();
 					break;
 				case 3:
-					System.out.println("\n\nAté mais!\n\n");
-					System.exit(0);
-					break;
+					sair();
 			}
 		}
 	}
@@ -282,6 +280,14 @@ public class EsqueletoRPG {
 		pause.nextLine();
 
 		limparTela();
+	}
+
+	/**
+	 * Exibe uma mensagem para o usuário e encerra o jogo.
+	 */
+	public static void sair() {
+		System.out.println("\n\nAté mais!\n\n");
+		System.exit(0);
 	}
 
 	/**
