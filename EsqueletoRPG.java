@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 /** ESQUELETO BASE PARA UM RPG QUIZ-STYLE NO TERMINAL
@@ -230,6 +231,36 @@ public class EsqueletoRPG {
 		System.out.println("Continua...");
 	}
 
+	/**
+	 * Altera a ordem dos elementos nos vetores passados como parâmetros, servindo para embaralhar as questões com suas
+	 * respectivas respostas e alternativas, mantendo-as sempre nos índices correspondentes.
+	 * @param questoes vetor de String contendo as questões do quiz.
+	 * @param alternativas matriz de String, contendo um vetor em cada posição com as alternativas incorretas para as
+	 *                     respectivas questões
+	 * @param respostas vetor de String contendo as respostas corretas das respectivas questões./
+	 */
+	public static void embaralharQuestoes(String[] questoes, String[][] alternativas, String[] respostas) {
+		Random random = new Random();
+
+		for(int i = 0; i < questoes.length - 1; i++) {
+			int j = random.nextInt(questoes.length-i) + i;
+
+			//troca para as questões
+			String tempQuestoes = questoes[i];
+			questoes[i] = questoes[j];
+			questoes[j] = tempQuestoes;
+
+			//troca para as respostas
+			String tempRespostas = respostas[i];
+			respostas[i] = respostas[j];
+			respostas[j] = tempRespostas;
+
+			//troca para as alternativas
+			String[] tempAlternativa = alternativas[i];
+			alternativas[i] = alternativas[j];
+			alternativas[j] = tempAlternativa;
+		}
+	}
 
 	/**
 	 * Exibe as regras do jogo para o usuário
