@@ -19,6 +19,80 @@ public class EsqueletoRPG {
 	public static int resposta = 2;
 
 	/**
+	 * Estrutura de dados para armazenar as questões, alternativas e respostas
+	 * dos desafios do quiz. Estão associados através da posição que ocupam no
+	 * vetor.
+	 */
+	public static final String[] PERGUNTAS = {
+			"Qual foi o primeiro computador eletromecânico construído pela IBM em 1944?",
+			"Em Java, qual palavra-chave é usada para impedir que uma classe seja herdada?",
+			"Na LIBRAS, qual configuração de mão é usada para o sinal de \"BRANCO\"?",
+			"Qual cientista é considerada a primeira programadora da história?",
+			"Qual é o retorno do método size() em uma lista vazia no Java Collections?",
+			"Quem criou a Máquina Analítica (projeto que nunca foi concluído em vida)?",
+			"Qual destes NÃO é um pilar da Orientação a Objetos?",
+			"O sinal de \"HOJE\" em LIBRAS utiliza qual movimento?",
+			"Em qual década o primeiro microprocessador (Intel 4004) foi lançado?",
+			"Qual comando Git é usado para listar os commits realizados?",
+			"Qual é o nome da interface pai de List, Set e Queue no Java?",
+			"A tecnologia de válvulas foi a marca principal de qual geração de computadores?",
+			"Em LIBRAS, o sinal de \"NOME\" é feito em qual parte do corpo?",
+			"Qual é a função do arquivo .gitignore?",
+			"Qual o nome da primeira máquina de calcular mecânica, criada por Pascal?",
+			"O que acontece se você tentar acessar um índice inexistente em um Array Java?",
+			"Em LIBRAS, a \"Expressão Facial\" é considerada um parâmetro?",
+			"Qual é a principal diferença entre um ArrayList e um LinkedList em Java?",
+			"Quem é conhecido como o \"Pai da Computação\" por decifrar a Enigma?",
+			"Qual operador Java é usado para comparar a igualdade de dois valores primitivos?"
+	};
+
+	public static final String[] RESPOSTAS = {
+			"Harvard Mark I",
+			"final",
+			"Mão em B",
+			"Ada Lovelace",
+			"0",
+			"Charles Babbage",
+			"Recursividade",
+			"Para baixo (duas vezes)",
+			"1970",
+			"git log",
+			"Collection",
+			"1ª Geração",
+			"Peito",
+			"Ignorar arquivos no commit",
+			"Pascalina",
+			"ArrayIndexOutOfBoundsException",
+			"Sim, obrigatório",
+			"A estrutura interna de dados",
+			"Alan Turing",
+			"=="
+	};
+	public static final String[][] ALTERNATIVAS = {
+			{"ENIAC", "Z3", "UNIVAC"},
+			{"static", "abstract", "private"},
+			{"Mão em 5", "Mão em L", "Mão em S"},
+			{"Grace Hopper", "Margaret Hamilton", "Joan Clarke"},
+			{"-1", "null", "1"},
+			{"Alan Turing", "Blaise Pascal", "John von Neumann"},
+			{"Polimorfismo", "Herança", "Encapsulamento"},
+			{"Para cima", "Circular", "Para os lados"},
+			{"1960", "1980", "1950"},
+			{"git commit", "git status", "git show"},
+			{"Map", "Iterable", "ArrayList"},
+			{"2ª Geração", "3ª Geração", "4ª Geração"},
+			{"Cabeça", "Mão oposta", "Braço"},
+			{"Excluir arquivos do PC", "Deletar branches", "Esconder senhas da IDE"},
+			{"Ábaco", "Step Reckoner", "Diferencial"},
+			{"Retorna 0", "Retorna null", "Erro de Compilação"},
+			{"Não, é opcional", "Apenas em sinais de dor", "Só para verbos"},
+			{"O ArrayList é mais lento", "O LinkedList não aceita Strings", "Não há diferença"},
+			{"Steve Jobs", "Bill Gates", "Linus Torvalds"},
+			{"=", "equals()", "==="}
+	};
+
+
+	/**
 	 * Desenha na tela o título do jogo em ASCII Art
 	 */
 	public static void desenharLogo() {
