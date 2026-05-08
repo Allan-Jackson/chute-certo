@@ -93,6 +93,14 @@ public class EsqueletoRPG {
 
 
 	/**
+	 * Configura variáveis e reseta valores necessários para jogo.
+	 */
+	public static void setup() {
+		//TODO: zerar pontuação
+		embaralharQuestoes(PERGUNTAS, ALTERNATIVAS, RESPOSTAS);
+	}
+
+	/**
 	 * Desenha na tela o título do jogo em ASCII Art
 	 */
 	public static void desenharLogo() {
@@ -169,6 +177,7 @@ public class EsqueletoRPG {
 
 
 	public static void iniciarJogo() {
+		setup();
 		introducao();
 		limparTela();
 		desafio1();
@@ -207,12 +216,12 @@ public class EsqueletoRPG {
 	 */
 	public static void desafio1() {
 		numeroDesafio = 1;
-		perguntaDesafio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus interdum, tortor sed bibendum bibendum, arcu orci?";
+		perguntaDesafio = PERGUNTAS[0];
 
-		opcao1 = "Alternativa primeira";
-		opcao2 = "Alternativa segunda";
-		opcao3 = "Alternativa terceira";
-		opcao4 = "Alternativa quarta";
+		opcao1 = ALTERNATIVAS[0][0];
+		opcao2 = RESPOSTAS[0];
+		opcao3 = ALTERNATIVAS[0][1];
+		opcao4 = ALTERNATIVAS[0][2];
 
 		resposta = 2;
 
@@ -261,12 +270,12 @@ public class EsqueletoRPG {
 	 */
 	public static void desafio2() {
 		numeroDesafio = 2;
-		perguntaDesafio = "Lorem ipsum SEGUNDO, consectetur adipiscing elit. Vivamus interdum, tortor sed bibendum bibendum, arcu orci?";
+		perguntaDesafio = PERGUNTAS[1];
 
-		opcao1 = "Primeira alternativa";
-		opcao2 = "Segunda alternativa";
-		opcao3 = "Terceira alternativa";
-		opcao4 = "Quarta alternativa";
+		opcao1 = ALTERNATIVAS[1][0];
+		opcao2 = ALTERNATIVAS[1][1];
+		opcao3 = ALTERNATIVAS[1][2];
+		opcao4 = RESPOSTAS[1];
 
 		resposta = 4;
 
@@ -281,6 +290,7 @@ public class EsqueletoRPG {
 
 			System.out.print("Diga sua resposta (ou 0 para regras): ");
 			op = entrada.nextInt();
+			entrada.nextLine(); //limpar o buffer
 
 			respostaValida = validarResposta(op);
 
@@ -298,9 +308,12 @@ public class EsqueletoRPG {
 		}while(!respostaValida || !(op == resposta));
 
 		//passou do desafio com vitória
-		System.out.println("Você completou a segunda missão com sucesso!");
-		System.out.println("Mas ainda não acabou, existem novos desafios pela frente!");
-		System.out.println("Continua...");
+		System.out.println("Você completou a segunda e última missão com sucesso!");
+		System.out.println("Aperte enter para continuar...");
+		entrada.nextLine();
+
+		limparTela();
+		telaTitulo();
 	}
 
 	/**
