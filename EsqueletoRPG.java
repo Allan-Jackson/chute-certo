@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class EsqueletoRPG {
 	
 	public static final int ALTURA_TELA = 30;
+	public static int pontuacao;
 
 	public static int numeroDesafio;
 	public static String perguntaDesafio;
@@ -16,7 +17,7 @@ public class EsqueletoRPG {
 	public static String opcao2;
 	public static String opcao3;
 	public static String opcao4;
-	public static int resposta = 2;
+	public static int resposta;
 
 	/**
 	 * Estrutura de dados para armazenar as questões, alternativas e respostas
@@ -96,7 +97,7 @@ public class EsqueletoRPG {
 	 * Configura variáveis e reseta valores necessários para jogo.
 	 */
 	public static void setup() {
-		//TODO: zerar pontuação
+		pontuacao = 0;
 		embaralharQuestoes(PERGUNTAS, ALTERNATIVAS, RESPOSTAS);
 	}
 
