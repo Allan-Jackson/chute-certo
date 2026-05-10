@@ -19,6 +19,11 @@ public class EsqueletoRPG {
 	public static String opcao4;
 	public static int resposta;
 
+	// --- SISTEMA DE SCORE (ARRAYS PARALELOS) ---
+    public static String[] nomesRecordes = new String[10];
+    public static int[] pontosRecordes = new int[10];
+    public static int contadorRecordes = 0;
+
 	/**
 	 * Estrutura de dados para armazenar as questões, alternativas e respostas
 	 * dos desafios do quiz. Estão associados através da posição que ocupam no
@@ -149,8 +154,13 @@ public class EsqueletoRPG {
 				case 2:
 					exibirRegras();
 					break;
-				case 3:
+				case 3: 
+					exibirScore(); 
+					break;
+				case 4:
 					sair();
+					break;
+				default: System.out.println("Opção Invalida");
 			}
 		}
 	}
@@ -162,7 +172,8 @@ public class EsqueletoRPG {
 		System.out.println("\n-----------------------------------------------\n");
 		System.out.println("[1] -> Iniciar jogo");
 		System.out.println("[2] -> Ler regras");
-		System.out.println("[3] -> Sair");
+		System.out.println("[3] -> Ver Placar de Líderes");
+		System.out.println("[4] -> Sair");
 	}
 
 	/**
@@ -178,11 +189,67 @@ public class EsqueletoRPG {
 
 
 	public static void iniciarJogo() {
-		setup();
-		introducao();
-		limparTela();
-		desafio1();
-	}
+        setup();
+        introducao();
+        limparTela();
+        
+        int totalPerguntasDesejadas = 20; // Quantas perguntas o jogador vai enfrentar por partida?
+        int vidas = 100; // Sistema de vidas simples
+        
+        for (int i = 0; i < totalPerguntasDesejadas; i++) {
+            limparTela();
+            boolean acertou = executarDesafio(i);
+            
+            if (!acertou) {
+                vidas--;
+                System.out.println("Vidas restantes: " + vidas);
+                
+                if (vidas == 0) {
+                    System.out.println("\nGAME OVER! Você perdeu todas as vidas.");
+                    break; // Sai do loop e acaba o jogo
+                }
+            }
+        }
+        
+        System.out.println("\nFim de jogo! Sua pontuação final foi: " + pontuacao);
+		salvarRecorde();
+    }
+	public static void salvarRecorde() {
+        Scanner entrada = new Scanner(System.in);
+        System.out.print("\nDigite seu nome para o ranking: ");
+        String nome = entrada.nextLine();
+
+        if (contadorRecordes < nomesRecordes.length) {
+            nomesRecordes[contadorRecordes] = nome;
+            pontosRecordes[contadorRecordes] = pontuacao;
+            contadorRecordes++;
+            System.out.println("Recorde salvo com sucesso!");
+        } else {
+            System.out.println("Placar cheio! Recorde não pôde ser salvo.");
+        }
+        
+        System.out.println("Pressione ENTER para ir ao placar...");
+        entrada.nextLine();
+        exibirScore();
+    }
+	public static void exibirScore() {
+        limparTela();
+        System.out.println("=== PLACAR DE LÍDERES ===");
+        System.out.println("NOME\t\t\tPONTOS");
+        System.out.println("------------------------------");
+
+        for (int i = 0; i < contadorRecordes; i++) {
+            System.out.println(nomesRecordes[i] + "\t\t\t" + pontosRecordes[i]);
+        }
+
+        if (contadorRecordes == 0) {
+            System.out.println("Nenhum recorde registrado ainda.");
+        }
+
+        System.out.println("\nPressione ENTER para voltar ao menu...");
+        new Scanner(System.in).nextLine();
+        limparTela();
+    }
 
 	/**
 	 * Exibe a história introdutório do jogo
@@ -215,107 +282,68 @@ public class EsqueletoRPG {
 	/**
 	 * Exibe para o usuário o primeiro desafio do jogo
 	 */
-	public static void desafio1() {
-		numeroDesafio = 1;
-		perguntaDesafio = PERGUNTAS[0];
-
-		opcao1 = ALTERNATIVAS[0][0];
-		opcao2 = RESPOSTAS[0];
-		opcao3 = ALTERNATIVAS[0][1];
-		opcao4 = ALTERNATIVAS[0][2];
-
-		resposta = 2;
-
-
-		int escolha;
-		Scanner entrada = new Scanner(System.in);
-
-		boolean respostaValida = false;
-
-		do { //repete enquanto a resposta não for válida
-
-			desenharDesafio();
-
-			System.out.print("Diga sua resposta (ou 0 para regras): ");
-			escolha = entrada.nextInt();
-			entrada.nextLine(); //limpar o buffer
-
-			respostaValida = validarResposta(escolha);
-
-			if(!respostaValida){
-				System.out.println("Opção inválida!");
-			}else if(escolha == 0) {
-				limparTela();
-				exibirRegras();
-			}else if(!(escolha == resposta)) {
-				/*TODO: PERDE VIDA E VERIFICA SE DEU GAME OVER*/
-				System.out.println("Você sofreu um ataque por errar a resposta e perdeu uma vida!");
-				System.out.println("Vc tem X vidas restantes.\n");
-			}
-
-		}while(!respostaValida || !(escolha == resposta));
-
-		//passou do desafio com vitória
-		System.out.println();
-		System.out.println("Você completou a primeira missão com sucesso!");
-		System.out.println("Vamos para a próxima missão!");
-		System.out.println("Aperte enter para continuar...");
-		entrada.nextLine();
-
-		limparTela();
-		desafio2();
-	}
-
 	/**
-	 * Exibe para o usuário o segundo desafio do jogo
-	 */
-	public static void desafio2() {
-		numeroDesafio = 2;
-		perguntaDesafio = PERGUNTAS[1];
+     * Executa um desafio genérico baseado no índice passado.
+     * @param indiceQuestao O índice da pergunta nos arrays (0 a 19)
+     * @return Retorna true se o jogador acertou, ou false se errou/saiu.
+     */
+    public static boolean executarDesafio(int indiceQuestao) {
+        numeroDesafio = indiceQuestao + 1;
+        perguntaDesafio = PERGUNTAS[indiceQuestao];
 
-		opcao1 = ALTERNATIVAS[1][0];
-		opcao2 = ALTERNATIVAS[1][1];
-		opcao3 = ALTERNATIVAS[1][2];
-		opcao4 = RESPOSTAS[1];
+        // Sorteia onde a resposta certa vai ficar (de 1 a 4)
+        Random rand = new Random();
+        resposta = rand.nextInt(4) + 1;
 
-		resposta = 4;
+        // Distribui as alternativas usando um array temporário
+        String[] opcoesMisturadas = new String[4];
+        opcoesMisturadas[resposta - 1] = RESPOSTAS[indiceQuestao]; // Coloca a certa na posição sorteada
 
-		int op;
-		Scanner entrada = new Scanner(System.in);
+        int indexErrada = 0;
+        for (int i = 0; i < 4; i++) {
+            if (i != (resposta - 1)) {
+                // Preenche os outros espaços com as alternativas incorretas
+                opcoesMisturadas[i] = ALTERNATIVAS[indiceQuestao][indexErrada];
+                indexErrada++;
+            }
+        }
 
-		boolean respostaValida = false;
+        // Atribui para as variáveis globais
+        opcao1 = opcoesMisturadas[0];
+        opcao2 = opcoesMisturadas[1];
+        opcao3 = opcoesMisturadas[2];
+        opcao4 = opcoesMisturadas[3];
 
-		do { //repete enquanto a resposta não for válida
+        int escolha;
+        Scanner entrada = new Scanner(System.in);
+        boolean respostaValida;
 
-			desenharDesafio();
+        do {
+            desenharDesafio();
+            System.out.print("Diga sua resposta (ou 0 para regras): ");
+            escolha = entrada.nextInt();
+            entrada.nextLine(); // limpar o buffer
 
-			System.out.print("Diga sua resposta (ou 0 para regras): ");
-			op = entrada.nextInt();
-			entrada.nextLine(); //limpar o buffer
+            respostaValida = validarResposta(escolha);
 
-			respostaValida = validarResposta(op);
+            if (!respostaValida) {
+                System.out.println("Opção inválida!\n");
+            } else if (escolha == 0) {
+                limparTela();
+                exibirRegras();
+            } else if (escolha != resposta) {
+                System.out.println("Você sofreu um ataque por errar a resposta e perdeu uma vida!\n");
+                return false; // Errou a questão
+            }
 
-			if(!respostaValida){
-				System.out.println("Opção inválida!");
-			}else if(op == 0) {
-				limparTela();
-				exibirRegras();
-			}else if(!(op == resposta)) {
-				/*TODO: PERDE VIDA E VERIFICA SE DEU GAME OVER*/
-				System.out.println("Você sofreu um ataque por errar a resposta e perdeu uma vida!");
-				System.out.println("Vc tem X vidas restantes.\n");
-			}
+        } while (!respostaValida || escolha == 0);
 
-		}while(!respostaValida || !(op == resposta));
-
-		//passou do desafio com vitória
-		System.out.println("Você completou a segunda e última missão com sucesso!");
-		System.out.println("Aperte enter para continuar...");
-		entrada.nextLine();
-
-		limparTela();
-		telaTitulo();
-	}
+        System.out.println("\nResposta Certa! Você avançou.");
+        pontuacao += 10; // Exemplo: ganha 10 pontos por acerto
+        System.out.println("Aperte enter para continuar...");
+        entrada.nextLine();
+        return true; // Acertou a questão
+    };
 
 	/**
 	 * Altera a ordem dos elementos nos vetores passados como parâmetros, servindo para embaralhar as questões com suas
