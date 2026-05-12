@@ -386,4 +386,145 @@ public class EsqueletoRPG {
 	public static boolean validarResposta(int resposta) {
 		return resposta >= 0 && resposta <= 4;
 	}
+
+	/**
+	 * Solicita entrada de um inteiro para o usuário que esteja dentro do array de opções válidas
+	 * e reexibe a interface, solicitando novamente a entrada, caso o usuário insira valor inválido.
+	 * @param textoParaEntrada texto para requisitar a entrada do usuário.
+	 * @param valoresValidos valores permitidos e considerados válidos para a entrada.
+	 * @return retorna o valor inteiro válido inserido pelo usuário.
+	 */
+	public static int lerOpcoes(String textoParaEntrada, int[] valoresValidos) {
+		textoParaEntrada = adicionarDoisPontos(textoParaEntrada);
+
+		while(true) {
+			boolean erroFormato = false;
+
+			String entradaUsuario = lerString(textoParaEntrada);
+
+			try {
+				int num = Integer.parseInt(entradaUsuario.trim());
+
+				if(contemValor(num, valoresValidos)) {
+					return num;
+				}
+			}catch (NumberFormatException e) {
+				erroFormato = true;
+			}
+
+			handleErro(erroFormato ? "Erro: digite um número!" : "Opção inválida!");
+		}
+	}
+
+	/**
+	 * Lida com o fluxo de erro, caso a entrada do usuário não tenha sido válida.
+	 * @param msg mensagem para ser exibida para o usuário no caso de erro no valor inserido.
+	 */
+	public static void handleErro(String msg) {
+		System.out.println(msg);
+		//limparTela();
+		//desenharInterface(); todo: implementar função
+	}
+
+	/**
+	 * Solicita a entrada para o usuário e devolve a string lida.
+	 * @param textoParaEntrada texto para requisitar a entrada do usuário.
+	 * @return retorna a string inserida pelo usuário.
+	 */
+	public static String lerString(String textoParaEntrada) {
+		Scanner input = new Scanner(System.in);
+		System.out.print(textoParaEntrada);
+		return input.nextLine();
+	}
+
+	/**
+	 * Solicita entrada de uma string para o usuário que esteja dentro do array de opções válidas
+	 * e reexibe a interface, solicitando novamente a entrada, caso o usuário insira valor inválido.
+	 * @param textoParaEntrada texto para requisitar a entrada do usuário.
+	 * @param valoresValidos valores permitidos e considerados válidos para a entrada.
+	 * @param ignorarCaixa indica se deve diferenciar maiúsculas e minúsculas na comparação.
+	 * @return retorna a string válida inserida pelo usuário.
+	 */
+	public static String lerOpcoes(String textoParaEntrada, String[] valoresValidos, boolean ignorarCaixa) {
+		textoParaEntrada = adicionarDoisPontos(textoParaEntrada);
+
+		while(true) {
+			String entradaUsuario = lerString(textoParaEntrada);
+
+			if (contemValor(entradaUsuario, valoresValidos, ignorarCaixa)) { //verifica se está na lista
+				return entradaUsuario;
+			}
+
+			handleErro("Opção inválida!");
+		}
+	}
+
+	/**
+	 * Solicita entrada de uma string para o usuário que esteja dentro do padrão especificada (regex).
+	 * @param textoParaEntrada texto para requisitar a entrada do usuário.
+	 * @param pattern regex especificando o padrão de entrada esperado.
+	 * @return retorna a string válida inserida pelo usuário.
+	 */
+	public static String lerComPadrao(String textoParaEntrada, String pattern) {
+		textoParaEntrada = adicionarDoisPontos(textoParaEntrada);
+
+		while(true) {
+			String entradaUsuario = lerString(textoParaEntrada);
+
+			if(entradaUsuario.matches(pattern)) {
+				return entradaUsuario;
+			}
+
+			handleErro("Opção inválida!");
+		}
+	}
+
+	/**
+	 * Verifica se o texto possui ": " no final, adicionando-o se não tiver.
+	 * @param texto texto que vai ser verificado e formatado.
+	 * @return o texto formatado com ": " no final.
+	 */
+	public static String adicionarDoisPontos(String texto) {
+		//retira os espaços do começo e final
+		texto = texto.trim();
+
+		//adiciona ': ' ao final, caso não tenha
+		if(!texto.matches("^.*:$")){
+			texto += ": ";
+		}else {
+			texto += " ";
+		}
+
+		return texto;
+	}
+
+	/**
+	 * Busca um valor dentro de um array de inteiro e retorna true se for encontrado, senão retorna false.
+	 * @param busca valor para ser procurado no array.
+	 * @param fonte array no qual a procura será feita.
+	 * @return true ou false se o valor foi encontrado.
+	 */
+	public static boolean contemValor(int busca, int[] fonte) {
+		for(int valor : fonte) {
+			if(valor == busca)
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Busca um valor dentro de um array de String e retorna true se for encontrado, senão retorna false.
+	 * @param busca valor para ser procurado no array.
+	 * @param fonte array no qual a procura será feita.
+	 * @param ignorarCaixa indica se deve diferenciar maiúsculas e minúsculas na busca ou não.
+	 * @return true ou false se o valor foi encontrado.
+	 */
+	public static boolean contemValor(String busca, String[] fonte, boolean ignorarCaixa) {
+		for(String valor : fonte) {
+			if(ignorarCaixa ? valor.equalsIgnoreCase(busca) : valor.equals(busca)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
