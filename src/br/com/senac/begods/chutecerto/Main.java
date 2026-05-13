@@ -1,4 +1,5 @@
-import java.sql.SQLOutput;
+package src.br.com.senac.begods.chutecerto;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -7,7 +8,7 @@ import java.util.Scanner;
  * se comportaria, sem preocupação com a história ou os
  * dados utilizados por enquanto
 */
-public class EsqueletoRPG {
+public class Main {
 
     /**
 	 * Constante para guardar a quantidade de linhas para
