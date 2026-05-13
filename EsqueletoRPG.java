@@ -7,7 +7,11 @@ import java.util.Scanner;
  * dados utilizados por enquanto
 */
 public class EsqueletoRPG {
-	
+
+	/**
+	 * Constante para guardar a quantidade de linhas para
+	 * pular para fazer uma mudança de tela.
+	 */
 	public static final int ALTURA_TELA = 30;
 
 	/**
