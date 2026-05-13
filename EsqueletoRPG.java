@@ -9,6 +9,22 @@ import java.util.Scanner;
 public class EsqueletoRPG {
 	
 	public static final int ALTURA_TELA = 30;
+
+	/**
+	 * Constantes para mapeamento das telas do quiz.
+	 */
+	public static final int TELA_TITULO = 1;
+	public static final int TELA_REGRAS = 2;
+	public static final int TELA_INTRODUCAO = 3;
+	public static final int TELA_DESAFIO = 4;
+
+	public static final int TELA_SAIR = 0;
+
+	/**
+	 * Variável que armazena o estado da tela atual do quiz.
+	 */
+	public static int telaAtual = TELA_DESAFIO;
+
 	public static int pontuacao;
 
 	public static int numeroDesafio;
@@ -92,6 +108,9 @@ public class EsqueletoRPG {
 			{"=", "equals()", "==="}
 	};
 
+	public static void main(String[] args) {
+		telaTitulo();
+	}
 
 	/**
 	 * Configura variáveis e reseta valores necessários para jogo.
@@ -99,6 +118,50 @@ public class EsqueletoRPG {
 	public static void setup() {
 		pontuacao = 0;
 		embaralharQuestoes(PERGUNTAS, ALTERNATIVAS, RESPOSTAS);
+	}
+
+	/**
+	 * Exibe a tela de título do jogo
+	 * com o logo e o menu inicial.
+	 */
+	public static void telaTitulo() {
+		desenharTela(TELA_TITULO);
+
+		while(true) {
+			int op = lerOpcoes("Escolha", new int[]{1, 2, 3});
+			limparTela();
+
+			switch (op) {
+				case 1 -> {
+					iniciarJogo();
+				}
+				case 2 -> {
+					telaRegras();
+					desenharTela(TELA_TITULO);
+				}
+				case 3 -> sair();
+			}
+		}
+	}
+
+	/**
+	 * Desenha uma tela específica do quiz, utilizando uma ou mais funções de desenhar.
+	 * @param codigoTela número que indica a tela a ser desenhada.
+	 */
+	public static void desenharTela(int codigoTela) {
+		telaAtual = codigoTela;
+
+		limparTela();
+		switch (codigoTela) {
+			case TELA_DESAFIO -> desenharDesafio();
+			case TELA_TITULO -> {
+				desenharLogo();
+				desenharMenuTitulo();
+			}
+			case TELA_REGRAS -> desenharRegras();
+			case TELA_SAIR -> desenharSair();
+			case TELA_INTRODUCAO -> desenharIntroducao();
+		}
 	}
 
 	/**
@@ -117,43 +180,6 @@ public class EsqueletoRPG {
 		System.out.println("  |       |        |          |        |/   \\    ");
 		System.out.println("   \\_____/ \\______/ \\_________/\\______/ \\___/");
 	}
-	
-	public static void main(String[] args) {
-		telaTitulo();
-	}
-
-	/**
-	 * Exibe a tela de título do jogo
-	 * com o logo e o menu inicial.
-	 */
-	public static void telaTitulo() {
-		boolean continuarNoMenu = true;
-
-		while(continuarNoMenu) {
-			desenharLogo();
-			desenharMenuTitulo();
-
-			Scanner entrada = new Scanner(System.in);
-			System.out.print("Escolha: ");
-
-			//TODO: criar método para realizar a leitura de dados do usuário com a devida validação e tratamento de erros
-			int op = entrada.nextInt();
-
-			limparTela();
-
-			switch (op) {
-				case 1:
-					iniciarJogo();
-					continuarNoMenu = false;
-					break;
-				case 2:
-					exibirRegras();
-					break;
-				case 3:
-					sair();
-			}
-		}
-	}
 
 	/**
 	 * Desenha o MENU INICIAL com as opções para o usuário.
@@ -163,37 +189,6 @@ public class EsqueletoRPG {
 		System.out.println("[1] -> Iniciar jogo");
 		System.out.println("[2] -> Ler regras");
 		System.out.println("[3] -> Sair");
-	}
-
-	/**
-	 * Limpa a tela do terminal.
-	 * Limpa a tela imprimindo várias quebras de linhas vazias
-	 * até encher a tela atual do usuário
-	 */
-	public static void limparTela() {
-		for(int i = 0; i < ALTURA_TELA; i++) {
-			System.out.println();
-		}
-	}
-
-
-	public static void iniciarJogo() {
-		setup();
-		introducao();
-		limparTela();
-		desafio1();
-	}
-
-	/**
-	 * Exibe a história introdutório do jogo
-	 */
-	public static void introducao() {
-		Scanner pause = new Scanner(System.in);
-		//TODO: desenvolver a história de introdução do jogo
-		System.out.println("Tudo começa com... o roteirista escrevendo a PORCARIA da história.\nFim da introdução!");
-
-		System.out.println("\nTecle ENTER para continuar...");
-		pause.nextLine();
 	}
 
 	/**
@@ -210,6 +205,81 @@ public class EsqueletoRPG {
 		System.out.println("3) " + opcao3);
 		System.out.println("4) " + opcao4);
 		System.out.println();
+	}
+
+	/**
+	 * Exibe as regras do jogo para o usuário
+	 */
+	private static void desenharRegras() {
+		//código provisório com msg e volta para o menu inicial
+		System.out.println("\n\nREGRAS:\n\n");
+		System.out.println("1. Responda as perguntas digitando o valor das opções 'A', 'B', 'C' ou 'D'.");
+		System.out.println("2. Cada resposta correta somará 10 pontos para o score.");
+		System.out.println("3. Digite 0 para ver estas regras durante um desafio.");
+		System.out.println("4. Ao final dos desafios digite seu nome para salvar na tabela de recordes.");
+		System.out.println("5. Convide seus amigos para jogar na mesma máquina e veja quem é o melhor.");
+		System.out.println("6. Não esqueça de se DIVERTIR!");
+		System.out.println("\n\n");
+	}
+
+	/**
+	 * Desenha a tela de introdução ao iniciar o jogo.
+	 */
+	public static void desenharIntroducao() {
+		System.out.println("Tudo começa em 1930 quando os países encantados por um incrível esporte decidem criar um" +
+				" campeonato mundial para decidir qual a melhor nação.");
+		System.out.println("E assim começa a Copa do Mundo!");
+		System.out.println("Bem-vindo ao nosso Quiz da Bola! Aqui você pode provar que entende tudo do assunto!");
+		System.out.println("\n\n");
+	}
+
+	/**
+	 * Desenha a tela de saída do jogo.
+	 */
+	public static void desenharSair() {
+		System.out.println("Obrigado por jogar!");
+		System.out.println("\n\nAté mais!\n\n");
+	}
+
+	/**
+	 * Limpa a tela do terminal.
+	 * Limpa a tela imprimindo várias quebras de linhas vazias
+	 * até encher a tela atual do usuário
+	 */
+	public static void limparTela() {
+		for(int i = 0; i < ALTURA_TELA; i++) {
+			System.out.println();
+		}
+	}
+
+
+	public static void iniciarJogo() {
+		setup();
+		telaIntroducao();
+		limparTela();
+		desafio1();
+	}
+
+	private static void telaRegras() {
+		desenharTela(TELA_REGRAS);
+
+		lerString("Tecle ENTER para continuar...");
+	}
+
+	/**
+	 * Exibe a história introdutório do jogo
+	 */
+	public static void telaIntroducao() {
+		desenharTela(TELA_INTRODUCAO);
+		lerString("Tecle ENTER para continuar...");
+	}
+
+	/**
+	 * Exibe uma mensagem para o usuário e encerra o jogo.
+	 */
+	public static void sair() {
+		desenharTela(TELA_SAIR);
+		System.exit(0);
 	}
 
 	/**
@@ -245,8 +315,7 @@ public class EsqueletoRPG {
 			if(!respostaValida){
 				System.out.println("Opção inválida!");
 			}else if(escolha == 0) {
-				limparTela();
-				exibirRegras();
+				telaRegras();
 			}else if(!(escolha == resposta)) {
 				/*TODO: PERDE VIDA E VERIFICA SE DEU GAME OVER*/
 				System.out.println("Você sofreu um ataque por errar a resposta e perdeu uma vida!");
@@ -298,8 +367,7 @@ public class EsqueletoRPG {
 			if(!respostaValida){
 				System.out.println("Opção inválida!");
 			}else if(op == 0) {
-				limparTela();
-				exibirRegras();
+				telaRegras();
 			}else if(!(op == resposta)) {
 				/*TODO: PERDE VIDA E VERIFICA SE DEU GAME OVER*/
 				System.out.println("Você sofreu um ataque por errar a resposta e perdeu uma vida!");
@@ -348,35 +416,6 @@ public class EsqueletoRPG {
 		}
 	}
 
-	/**
-	 * Exibe as regras do jogo para o usuário
-	 * IDEA: as regras podem ser verificadas durante o próprio jogo
-	 * e deve voltar para a mesma tela que estava
-	 */
-	private static void exibirRegras() {
-		Scanner pause = new Scanner(System.in);
-
-		//código provisório com msg e volta para o menu inicial
-		System.out.println("\n\nEis aí as regras:\nHAHAHAHAHAHAHA!\n\n");
-		System.out.println("1. Eis aí as regras:\nHAHAHAHAHAHAHA!");
-		System.out.println("2. Eis aí as regras:\nHAHAHAHAHAHAHA!");
-		System.out.println("3. Eis aí as regras:\nHAHAHAHAHAHAHA!");
-		System.out.println("4. Eis aí as regras:\nHAHAHAHAHAHAHA!");
-		System.out.println("\n\nEis aí as regras:\nHAHAHAHAHAHAHA!\n\n");
-
-		System.out.println("Tecle ENTER para continuar...");
-		pause.nextLine();
-
-		limparTela();
-	}
-
-	/**
-	 * Exibe uma mensagem para o usuário e encerra o jogo.
-	 */
-	public static void sair() {
-		System.out.println("\n\nAté mais!\n\n");
-		System.exit(0);
-	}
 
 	/**
 	 * Verifica se a resposta inserida pelo jogador é válida
@@ -422,9 +461,9 @@ public class EsqueletoRPG {
 	 */
 	public static void handleErro(String msg) {
 		System.out.println(msg);
-		//limparTela();
-		//desenharInterface(); todo: implementar função
+		desenharTela(telaAtual);
 	}
+
 
 	/**
 	 * Solicita a entrada para o usuário e devolve a string lida.
