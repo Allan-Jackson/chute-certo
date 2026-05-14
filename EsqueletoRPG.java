@@ -299,13 +299,17 @@ public class EsqueletoRPG {
         for(int i = 0; i < PERGUNTAS.length; i++) {
             jogarDesafio(i);
         }
-        
+
         // Fim de Jogo (Pedido 8)
         limparTela();
         System.out.println("FIM DE JOGO! Você concluiu todas as missões.");
         System.out.println("Sua pontuação final foi: " + pontuacao + " pontos.\n");
         
-        String nome = lerString("Digite seu nome para o Placar: ");
+        String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$").trim();
+
+        //pega apenas as 3 primeiras letras
+        nome = nome.length() > 3 ? nome.substring(0, 3) : nome;
+
         salvarNoPlacar(nome, pontuacao);
         
         telaScore();
