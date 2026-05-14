@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -21,9 +22,8 @@ public class EsqueletoRPG {
     public static final int TELA_REGRAS = 2;
     public static final int TELA_INTRODUCAO = 3;
     public static final int TELA_DESAFIO = 4;
-
-    public static final int TELA_SCORE = 5; // Nova tela adicionada para o Placar
-
+    public static final int TELA_SCORE = 5;
+    public static final int TELA_FINALIZAR = 6;
     public static final int TELA_SAIR = 0;
 
     /**
@@ -144,23 +144,11 @@ public class EsqueletoRPG {
         limparTela();
 
         // Laço que passa por todas as 20 questões aleatorizadas
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < PERGUNTAS.length; i++) {
             telaDesafio(i);
         }
 
-        // Fim de Jogo (Pedido 8)
-        limparTela();
-        System.out.println("FIM DE JOGO! Você concluiu todas as missões.");
-        System.out.println("Sua pontuação final foi: " + pontuacao + " pontos.\n");
-
-        String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$", "Por favor, utilize somente letras!").trim();
-
-        //pega apenas as 3 primeiras letras
-        nome = nome.length() > 3 ? nome.substring(0, 3) : nome;
-
-        salvarNoPlacar(nome, pontuacao);
-
-        telaScore();
+        telaFinalizar();
     }
 
     /**
@@ -202,6 +190,22 @@ public class EsqueletoRPG {
     public static void telaIntroducao() {
         desenharTela(TELA_INTRODUCAO);
         pausar();
+    }
+
+    /**
+     * Exibe a tela de final do quiz, pega o nome do usuário, salva e mostra o placar
+     */
+    public static void telaFinalizar() {
+        desenharTela(TELA_FINALIZAR);
+
+        String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$", "Por favor, utilize somente letras!").trim();
+
+        //pega apenas as 3 primeiras letras
+        nome = nome.length() > 3 ? nome.substring(0, 3) : nome;
+
+        salvarNoPlacar(nome, pontuacao);
+
+        telaScore();
     }
 
     /**
@@ -312,14 +316,15 @@ public class EsqueletoRPG {
         }
 
         switch (codigoTela) {
-            case TELA_DESAFIO -> desenharDesafio();
             case TELA_TITULO -> {
                 desenharLogo();
                 desenharMenuTitulo();
             }
+            case TELA_DESAFIO -> desenharDesafio();
             case TELA_REGRAS -> desenharRegras();
-            case TELA_INTRODUCAO -> desenharIntroducao();
             case TELA_SCORE -> desenharScore();
+            case TELA_INTRODUCAO -> desenharIntroducao();
+            case TELA_FINALIZAR -> desenharFinalizar();
             case TELA_SAIR -> desenharSair();
         }
     }
@@ -390,6 +395,17 @@ public class EsqueletoRPG {
         System.out.println("Bem-vindo ao nosso Quiz! Aqui você pode provar que entende tudo do assunto!");
         System.out.println("\n\n");
     }
+
+    /**
+     * Desenha a tela de finalização do jogo.
+     */
+    public static void desenharFinalizar() {
+        System.out.println("------------------ FIM DA PARTIDA! -----------------");
+        System.out.println();
+        System.out.println("Parabéns, você chegou ao final da copa de perguntas.");
+        System.out.println("Sua pontuação foi de " + pontuacao + " pontos!\n");
+    }
+
 
     /**
      * Desenha a tela de score do jogo.
