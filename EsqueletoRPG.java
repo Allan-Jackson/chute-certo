@@ -260,40 +260,22 @@ public class EsqueletoRPG {
             }
         }
 
-        boolean acertou = false;
-        int tentativas = 1;
+        desenharTela(TELA_DESAFIO);
 
-        while (!acertou) {
-            desenharTela(TELA_DESAFIO);
+        int escolha = lerOpcoes("Diga sua resposta: ", new int[]{1, 2, 3, 4});
 
-            int escolha = lerOpcoes("Diga sua resposta (ou 0 para regras)", new int[]{0, 1, 2, 3, 4});
+        if(escolha == resposta) {
+            pontuacao += 10;
 
-            if(escolha == 0) {
-                telaRegras();
-            } else if(escolha == resposta) {
-                acertou = true;
-                int pontosGanhos;
-                
-                // Distribui os pontos baseado na tentativa (Pedido 5)
-                if (tentativas == 1) {
-                    pontosGanhos = 10;
-                } else if (tentativas == 2) {
-                    pontosGanhos = 5;
-                } else {
-                    pontosGanhos = 2;
-                }
-                pontuacao += pontosGanhos;
-
-                System.out.println("\nResposta Certa! Você ganhou " + pontosGanhos + " pontos.");
-                System.out.println("Você completou a missão atual com sucesso!\n\n");
-                pausar();
-            } else {
-                // Errou
-                tentativas++;
-                System.out.println("\nResposta Incorreta! Você sofreu um ataque, mas pode tentar de novo.");
-                pausar();
-            }
+            System.out.println("\nGOOOOOOOOOOL!!!");
+            System.out.println("\nVocê chutou a bola e acertou no gol.\nVocê ganhou " + 10 + " pontos!");
+            System.out.println("\nContinue assim, artilheiro!\n\n");
+        } else {
+            System.out.println("\nErrou o chute!!!");
+            System.out.println("\nTudo bem, bola fora acontece. Não desista e continue chutando!!!\n");
         }
+
+        pausar();
     }
 
     /**
@@ -333,6 +315,7 @@ public class EsqueletoRPG {
      * Desenha na tela o título do jogo em ASCII Art
      */
     public static void desenharLogo() {
+        System.out.println();
         System.out.println("..######..##.....##.##.....##.########.########.....######..########.########..########..#######.");
         System.out.println(".##....##.##.....##.##.....##....##....##..........##....##.##.......##.....##....##....##.....##");
         System.out.println(".##.......##.....##.##.....##....##....##..........##.......##.......##.....##....##....##.....##");
