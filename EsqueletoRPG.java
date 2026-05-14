@@ -122,13 +122,45 @@ public class EsqueletoRPG {
     public static void main(String[] args) {
         telaTitulo();
     }
-    
+
+    /**
+     * Espera o usuário digitar "Enter" para continuar o jogo.
+     */
+    public static void pausar() {
+        lerString("Tecle ENTER para continuar...");
+    }
+
 	/**
 	 * Configura variáveis e reseta valores necessários para jogo.
 	 */
     public static void setup() {
         pontuacao = 0;
         embaralharQuestoes(PERGUNTAS, ALTERNATIVAS, RESPOSTAS);
+    }
+
+    public static void iniciarJogo() {
+        setup();
+        telaIntroducao();
+        limparTela();
+
+        // Laço que passa por todas as 20 questões aleatorizadas
+        for(int i = 0; i < 1; i++) {
+            telaDesafio(i);
+        }
+
+        // Fim de Jogo (Pedido 8)
+        limparTela();
+        System.out.println("FIM DE JOGO! Você concluiu todas as missões.");
+        System.out.println("Sua pontuação final foi: " + pontuacao + " pontos.\n");
+
+        String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$", "Por favor, utilize somente letras!").trim();
+
+        //pega apenas as 3 primeiras letras
+        nome = nome.length() > 3 ? nome.substring(0, 3) : nome;
+
+        salvarNoPlacar(nome, pontuacao);
+
+        telaScore();
     }
 
     /**
@@ -156,174 +188,12 @@ public class EsqueletoRPG {
         }
     }
 
-
     /**
-     * Desenha uma tela específica do quiz, limpando a tela antes por padrão.
-     * @param codigoTela número que indica a tela a ser desenhada.
+     * Exibe a tela de regras do jogo.
      */
-    public static void desenharTela(int codigoTela) {
-        desenharTela(codigoTela, true);
-    }
-
-    /**
-     * Desenha uma tela específica do quiz, utilizando uma ou mais funções de desenhar.
-     * @param codigoTela número que indica a tela a ser desenhada.
-     */
-    public static void desenharTela(int codigoTela, boolean limparTela) {
-        telaAtual = codigoTela;
-
-        if(limparTela){
-            limparTela();
-        }
-
-        switch (codigoTela) {
-            case TELA_DESAFIO -> desenharDesafio();
-            case TELA_TITULO -> {
-                desenharLogo();
-                desenharMenuTitulo();
-            }
-            case TELA_REGRAS -> desenharRegras();
-            case TELA_INTRODUCAO -> desenharIntroducao();
-            case TELA_SCORE -> desenharScore();
-            case TELA_SAIR -> desenharSair();
-        }
-    }
-
-    /**
-	 * Desenha na tela o título do jogo em ASCII Art
-	 */
-    public static void desenharLogo() {
-        System.out.println("..######..##.....##.##.....##.########.########.....######..########.########..########..#######.");
-        System.out.println(".##....##.##.....##.##.....##....##....##..........##....##.##.......##.....##....##....##.....##");
-        System.out.println(".##.......##.....##.##.....##....##....##..........##.......##.......##.....##....##....##.....##");
-        System.out.println(".##.......#########.##.....##....##....######......##.......######...########.....##....##.....##");
-        System.out.println(".##.......##.....##.##.....##....##....##..........##.......##.......##...##......##....##.....##");
-        System.out.println(".##....##.##.....##.##.....##....##....##..........##....##.##.......##....##.....##....##.....##");
-        System.out.println("..######..##.....##..#######.....##....########.....######..########.##.....##....##.....#######.");
-        System.out.println();
-        System.out.println("-------------------------------------------------------------------------------------------------");
-        System.out.println();
-    }
-
-    /**
-	 * Desenha o MENU INICIAL com as opções para o usuário.
-	 */
-    public static void desenharMenuTitulo() {
-        System.out.println("[1] -> Iniciar jogo");
-        System.out.println("[2] -> Ler regras");
-        System.out.println("[3] -> Ver Placar de Score");
-        System.out.println("[4] -> Sair");
-    }
-
-    /**
-	 * Desenha na tela o título do jogo em ASCII Art
-	 */
-    public static void desenharDesafio() {
-        System.out.println("DESAFIO " + numeroDesafio + " de 20");
-        System.out.println("Sua Pontuação: " + pontuacao);
-        System.out.println("---------");
-        System.out.println(perguntaDesafio);
-        System.out.println("---------");
-        System.out.println("1) " + opcao1);
-        System.out.println("2) " + opcao2);
-        System.out.println("3) " + opcao3);
-        System.out.println("4) " + opcao4);
-        System.out.println();
-    }
-
-    /**
-	 * Exibe as regras do jogo para o usuário
-	 */
-    private static void desenharRegras() {
-        //código provisório com msg e volta para o menu inicial
-        System.out.println("\n\nREGRAS:\n\n");
-        System.out.println("1. Responda as perguntas digitando o valor das opções '1', '2', '3' ou '4'.");
-        System.out.println("2. Acertar de 1ª vale 10 pts, de 2ª vale 5 pts, de 3ª ou mais vale 2 pts.");
-        System.out.println("3. Digite 0 para ver estas regras durante um desafio.");
-        System.out.println("4. Ao final dos desafios digite seu nome para salvar na tabela de recordes.");
-        System.out.println("5. Convide seus amigos para jogar na mesma máquina e veja quem é o melhor.");
-        System.out.println("6. Não esqueça de se DIVERTIR!");
-        System.out.println("\n\n");
-    }
-	/**
-	 * Desenha a tela de introdução ao iniciar o jogo.
-	 */
-    public static void desenharIntroducao() {
-        System.out.println("Tudo começa em 1930 quando os países encantados por um incrível esporte decidem criar um campeonato mundial...");
-        System.out.println("E assim começa a Copa do Mundo!");
-        System.out.println("Bem-vindo ao nosso Quiz! Aqui você pode provar que entende tudo do assunto!");
-        System.out.println("\n\n");
-    }
-
-    /**
-     * Desenha a tela de score do jogo.
-     */
-    public static void desenharScore() {
-        System.out.println("=================================");
-        System.out.println("          TOP 10 SCORES          ");
-        System.out.println("=================================");
-        System.out.println("Jogadores que já participaram: " + totalScoresSalvos);
-        System.out.println("---------------------------------");
-
-        for (int i = 0; i < 10; i++) {
-            if (nomesTop10[i] != null) {
-                System.out.printf("%2dº Lugar: %s - %3d pts\n", (i + 1), nomesTop10[i].toUpperCase(), pontosTop10[i]);
-            } else {
-                System.out.printf("%2dº Lugar: ---\n", (i + 1));
-            }
-        }
-        System.out.println("=================================\n");
-    }
-    /**
-	 * Desenha a tela de saída do jogo.
-	 */
-    public static void desenharSair() {
-        System.out.println("Obrigado por jogar!");
-        System.out.println("\n\nAté mais!\n\n");
-    }
-    /**
-	 * Limpa a tela do terminal.
-	 * Limpa a tela imprimindo várias quebras de linhas vazias
-	 * até encher a tela atual do usuário
-	 */
-    public static void limparTela() {
-        for(int i = 0; i < ALTURA_TELA; i++) {
-            System.out.println();
-        }
-    }
-
-    public static void iniciarJogo() {
-        setup();
-        telaIntroducao();
-        limparTela();
-        
-        // Laço que passa por todas as 20 questões aleatorizadas
-        for(int i = 0; i < 1; i++) {
-            jogarDesafio(i);
-        }
-
-        // Fim de Jogo (Pedido 8)
-        limparTela();
-        System.out.println("FIM DE JOGO! Você concluiu todas as missões.");
-        System.out.println("Sua pontuação final foi: " + pontuacao + " pontos.\n");
-        
-        String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$", "Por favor, utilize somente letras!").trim();
-
-        //pega apenas as 3 primeiras letras
-        nome = nome.length() > 3 ? nome.substring(0, 3) : nome;
-
-        salvarNoPlacar(nome, pontuacao);
-        
-        telaScore();
-    }
-
     public static void telaRegras() {
         desenharTela(TELA_REGRAS);
         pausar();
-    }
-
-    public static void pausar() {
-        lerString("Tecle ENTER para continuar...");
     }
 
     /**
@@ -354,7 +224,7 @@ public class EsqueletoRPG {
      * Exibe a tela de desafio do quiz e realiza a lógica de pontuação.
      * @param indiceAtual indice de qual desafio deve ser exibido.
      */
-    public static void jogarDesafio(int indiceAtual) {
+    public static void telaDesafio(int indiceAtual) {
         numeroDesafio = indiceAtual + 1;
         perguntaDesafio = PERGUNTAS[indiceAtual];
 
@@ -419,6 +289,144 @@ public class EsqueletoRPG {
                 System.out.println("\nResposta Incorreta! Você sofreu um ataque, mas pode tentar de novo.");
                 pausar();
             }
+        }
+    }
+
+    /**
+     * Desenha uma tela específica do quiz, limpando a tela antes por padrão.
+     * @param codigoTela número que indica a tela a ser desenhada.
+     */
+    public static void desenharTela(int codigoTela) {
+        desenharTela(codigoTela, true);
+    }
+
+    /**
+     * Desenha uma tela específica do quiz, utilizando uma ou mais funções de desenhar.
+     * @param codigoTela número que indica a tela a ser desenhada.
+     */
+    public static void desenharTela(int codigoTela, boolean limparTela) {
+        telaAtual = codigoTela;
+
+        if(limparTela){
+            limparTela();
+        }
+
+        switch (codigoTela) {
+            case TELA_DESAFIO -> desenharDesafio();
+            case TELA_TITULO -> {
+                desenharLogo();
+                desenharMenuTitulo();
+            }
+            case TELA_REGRAS -> desenharRegras();
+            case TELA_INTRODUCAO -> desenharIntroducao();
+            case TELA_SCORE -> desenharScore();
+            case TELA_SAIR -> desenharSair();
+        }
+    }
+
+    /**
+     * Desenha na tela o título do jogo em ASCII Art
+     */
+    public static void desenharLogo() {
+        System.out.println("..######..##.....##.##.....##.########.########.....######..########.########..########..#######.");
+        System.out.println(".##....##.##.....##.##.....##....##....##..........##....##.##.......##.....##....##....##.....##");
+        System.out.println(".##.......##.....##.##.....##....##....##..........##.......##.......##.....##....##....##.....##");
+        System.out.println(".##.......#########.##.....##....##....######......##.......######...########.....##....##.....##");
+        System.out.println(".##.......##.....##.##.....##....##....##..........##.......##.......##...##......##....##.....##");
+        System.out.println(".##....##.##.....##.##.....##....##....##..........##....##.##.......##....##.....##....##.....##");
+        System.out.println("..######..##.....##..#######.....##....########.....######..########.##.....##....##.....#######.");
+        System.out.println();
+        System.out.println("-------------------------------------------------------------------------------------------------");
+        System.out.println();
+    }
+
+    /**
+     * Desenha o MENU INICIAL com as opções para o usuário.
+     */
+    public static void desenharMenuTitulo() {
+        System.out.println("[1] -> Iniciar jogo");
+        System.out.println("[2] -> Ler regras");
+        System.out.println("[3] -> Ver Placar de Score");
+        System.out.println("[4] -> Sair");
+    }
+
+    /**
+     * Desenha na tela o título do jogo em ASCII Art
+     */
+    public static void desenharDesafio() {
+        System.out.println("DESAFIO " + numeroDesafio + " de 20");
+        System.out.println("Sua Pontuação: " + pontuacao);
+        System.out.println("---------");
+        System.out.println(perguntaDesafio);
+        System.out.println("---------");
+        System.out.println("1) " + opcao1);
+        System.out.println("2) " + opcao2);
+        System.out.println("3) " + opcao3);
+        System.out.println("4) " + opcao4);
+        System.out.println();
+    }
+
+    /**
+     * Exibe as regras do jogo para o usuário
+     */
+    private static void desenharRegras() {
+        //código provisório com msg e volta para o menu inicial
+        System.out.println("\n\nREGRAS:\n\n");
+        System.out.println("1. Responda as perguntas digitando o valor das opções '1', '2', '3' ou '4'.");
+        System.out.println("2. Acertar de 1ª vale 10 pts, de 2ª vale 5 pts, de 3ª ou mais vale 2 pts.");
+        System.out.println("3. Digite 0 para ver estas regras durante um desafio.");
+        System.out.println("4. Ao final dos desafios digite seu nome para salvar na tabela de recordes.");
+        System.out.println("5. Convide seus amigos para jogar na mesma máquina e veja quem é o melhor.");
+        System.out.println("6. Não esqueça de se DIVERTIR!");
+        System.out.println("\n\n");
+    }
+
+    /**
+     * Desenha a tela de introdução ao iniciar o jogo.
+     */
+    public static void desenharIntroducao() {
+        System.out.println("Tudo começa em 1930 quando os países encantados por um incrível esporte decidem criar um campeonato mundial...");
+        System.out.println("E assim começa a Copa do Mundo!");
+        System.out.println("Bem-vindo ao nosso Quiz! Aqui você pode provar que entende tudo do assunto!");
+        System.out.println("\n\n");
+    }
+
+    /**
+     * Desenha a tela de score do jogo.
+     */
+    public static void desenharScore() {
+        System.out.println("=================================");
+        System.out.println("          TOP 10 SCORES          ");
+        System.out.println("=================================");
+        System.out.println("Jogadores que já participaram: " + totalScoresSalvos);
+        System.out.println("---------------------------------");
+
+        for (int i = 0; i < 10; i++) {
+            if (nomesTop10[i] != null) {
+                System.out.printf("%2dº Lugar: %s - %3d pts\n", (i + 1), nomesTop10[i].toUpperCase(), pontosTop10[i]);
+            } else {
+                System.out.printf("%2dº Lugar: ---\n", (i + 1));
+            }
+        }
+        System.out.println("=================================\n");
+    }
+
+    /**
+     * Desenha a tela de saída do jogo.
+     */
+    public static void desenharSair() {
+        System.out.println("Obrigado por jogar!");
+        System.out.println("\n\nAté mais!\n\n");
+    }
+
+    /**
+     * Limpa a tela do terminal.
+     * Limpa a tela imprimindo várias quebras de linhas vazias
+     * até encher a tela atual do usuário
+     */
+    public static void limparTela() {
+        for(int i = 0; i < ALTURA_TELA; i++) {
+            System.out.println();
         }
     }
 
