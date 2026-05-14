@@ -120,8 +120,14 @@ public class EsqueletoRPG {
 	 * com o logo e o menu inicial.
 	 */
     public static void telaTitulo() {
+        //Não limpa a tela na primeira renderização
+        boolean limparTela = false;
+
         while(true) {
-            desenharTela(TELA_TITULO);
+            desenharTela(TELA_TITULO, limparTela);
+
+            //Limpar a tela ao voltar no menu após a primeira renderização
+            limparTela = true;
 
             int op = lerOpcoes("Escolha", new int[]{1, 2, 3, 4});
 
@@ -134,14 +140,26 @@ public class EsqueletoRPG {
         }
     }
 
+
+    /**
+     * Desenha uma tela específica do quiz, limpando a tela antes por padrão.
+     * @param codigoTela número que indica a tela a ser desenhada.
+     */
+    public static void desenharTela(int codigoTela) {
+        desenharTela(codigoTela, true);
+    }
+
     /**
      * Desenha uma tela específica do quiz, utilizando uma ou mais funções de desenhar.
      * @param codigoTela número que indica a tela a ser desenhada.
      */
-    public static void desenharTela(int codigoTela) {
+    public static void desenharTela(int codigoTela, boolean limparTela) {
         telaAtual = codigoTela;
 
-        limparTela();
+        if(limparTela){
+            limparTela();
+        }
+
         switch (codigoTela) {
             case TELA_DESAFIO -> desenharDesafio();
             case TELA_TITULO -> {
