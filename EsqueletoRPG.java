@@ -481,13 +481,26 @@ public class EsqueletoRPG {
     }
 
     /**
-     * Solicita entrada de um inteiro para o usuário que esteja dentro do array de opções válidas
-     * e reexibe a interface, solicitando novamente a entrada, caso o usuário insira valor inválido.
-     * @param textoParaEntrada texto para requisitar a entrada do usuário.
-     * @param valoresValidos valores permitidos e considerados válidos para a entrada.
-     * @return retorna o valor inteiro válido inserido pelo usuário.
+     * Solicita a entrada de um inteiro válido, utilizando uma mensagem de erro padrão.
+     * * <p>Este é um método de conveniência que chama
+     * {@link #lerOpcoes(String, int[], String)} com a mensagem "Opção inválida!".
+     *
+     * @param textoParaEntrada texto exibido ao solicitar a entrada.
+     * @param valoresValidos array de inteiros com as opções aceitas.
+     * @return o valor inteiro válido inserido pelo usuário.
      */
     public static int lerOpcoes(String textoParaEntrada, int[] valoresValidos) {
+        return lerOpcoes(textoParaEntrada, valoresValidos, "Opção inválida!");
+    }
+
+    /**
+     * Solicita entrada de um inteiro para o usuário que esteja dentro do array de opções válidas
+     * e reexibe a interface, solicitando novamente a entrada, caso o usuário insira valor inválido.
+     * @param textoParaEntrada texto exibido ao solicitar a entrada.
+     * @param valoresValidos array de inteiros com as opções aceitas.
+     * @return o valor inteiro válido inserido pelo usuário.
+     */
+    public static int lerOpcoes(String textoParaEntrada, int[] valoresValidos, String mensagemErro) {
         textoParaEntrada = adicionarDoisPontos(textoParaEntrada);
 
         while(true) {
@@ -502,7 +515,7 @@ public class EsqueletoRPG {
             }catch (NumberFormatException e) {
                 erroFormato = true;
             }
-            handleErro(erroFormato ? "Erro: digite um número!" : "Opção inválida!");
+            handleErro(erroFormato ? "Erro: digite um número!" : mensagemErro);
         }
     }
 
@@ -529,32 +542,59 @@ public class EsqueletoRPG {
     }
 
     /**
-     * Solicita entrada de uma string para o usuário que esteja dentro do array de opções válidas
-     * e reexibe a interface, solicitando novamente a entrada, caso o usuário insira valor inválido.
-     * @param textoParaEntrada texto para requisitar a entrada do usuário.
-     * @param valoresValidos valores permitidos e considerados válidos para a entrada.
-     * @param ignorarCaixa indica se deve diferenciar maiúsculas e minúsculas na comparação.
-     * @return retorna a string válida inserida pelo usuário.
+     * Solicita a entrada de uma opção válida, utilizando uma mensagem de erro padrão.
+     * * <p>Este é um método de conveniência que chama
+     * {@link #lerOpcoes(String, String[], boolean, String)} com a mensagem "Opção inválida!".
+     *
+     * @param textoParaEntrada texto exibido ao solicitar a entrada.
+     * @param valoresValidos   array de strings com as opções aceitas.
+     * @param ignorarCaixa     se verdadeiro, ignora diferenças entre maiúsculas/minúsculas.
+     * @return a string validada inserida pelo usuário.
      */
     public static String lerOpcoes(String textoParaEntrada, String[] valoresValidos, boolean ignorarCaixa) {
+        return lerOpcoes(textoParaEntrada, valoresValidos, ignorarCaixa, "Opção inválida!");
+    }
+
+    /**
+     * Solicita entrada de uma string para o usuário que esteja dentro do array de opções válidas
+     * <p> Caso a entrada seja inválida, reexibe a interface, solicitando uma nova entrada.
+     * @param textoParaEntrada texto exibido ao solicitar a entrada do usuário.
+     * @param valoresValidos array de strings com as opções aceitas.
+     * @param ignorarCaixa se verdadeiro, ignora diferenças entre maiúsculas/minúsculas.
+     * @return retorna a string válida inserida pelo usuário.
+     */
+    public static String lerOpcoes(String textoParaEntrada, String[] valoresValidos, boolean ignorarCaixa, String mensagemErro) {
         textoParaEntrada = adicionarDoisPontos(textoParaEntrada);
 
         while(true) {
             String entradaUsuario = lerString(textoParaEntrada);
-            if (contemValor(entradaUsuario, valoresValidos, ignorarCaixa)) { 
+            if (contemValor(entradaUsuario, valoresValidos, ignorarCaixa)) {
                 return entradaUsuario;
             }
-            handleErro("Opção inválida!");
+            handleErro(mensagemErro);
         }
     }
 
     /**
-     * Solicita entrada de uma string para o usuário que esteja dentro do padrão especificada (regex).
-     * @param textoParaEntrada texto para requisitar a entrada do usuário.
+     * Solicita a entrada de uma opção válida, utilizando uma mensagem de erro padrão.
+     * * <p>Este é um método de conveniência que chama
+     * {@link #lerComPadrao(String, String, String)} com a mensagem "Opção inválida!".
+     *
+     * @param textoParaEntrada texto exibido ao solicitar a entrada.
      * @param pattern regex especificando o padrão de entrada esperado.
-     * @return retorna a string válida inserida pelo usuário.
+     * @return a string válida inserida pelo usuário.
      */
     public static String lerComPadrao(String textoParaEntrada, String pattern) {
+        return lerComPadrao(textoParaEntrada, pattern, "Opção inválida!");
+    }
+    
+    /**
+     * Solicita entrada de uma string para o usuário que esteja dentro do padrão especificada (regex).
+     * @param textoParaEntrada texto exibido ao solicitar a entrada.
+     * @param pattern regex especificando o padrão de entrada esperado.
+     * @return a string válida inserida pelo usuário.
+     */
+    public static String lerComPadrao(String textoParaEntrada, String pattern, String mensagemErro) {
         textoParaEntrada = adicionarDoisPontos(textoParaEntrada);
 
         while(true) {
@@ -562,7 +602,7 @@ public class EsqueletoRPG {
             if(entradaUsuario.matches(pattern)) {
                 return entradaUsuario;
             }
-            handleErro("Opção inválida!");
+            handleErro(mensagemErro);
         }
     }
 
