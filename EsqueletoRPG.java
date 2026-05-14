@@ -254,15 +254,17 @@ public class EsqueletoRPG {
         System.out.println("Bem-vindo ao nosso Quiz! Aqui você pode provar que entende tudo do assunto!");
         System.out.println("\n\n");
     }
-    
-    // --- FUNÇÃO PARA DESENHAR O SCORE ---
+
+    /**
+     * Desenha a tela de score do jogo.
+     */
     public static void desenharScore() {
         System.out.println("=================================");
         System.out.println("          TOP 10 SCORES          ");
         System.out.println("=================================");
         System.out.println("Jogadores que já participaram: " + totalScoresSalvos);
         System.out.println("---------------------------------");
-        
+
         for (int i = 0; i < 10; i++) {
             if (nomesTop10[i] != null) {
                 System.out.printf("%2dº Lugar: %s - %3d pts\n", (i + 1), nomesTop10[i].toUpperCase(), pontosTop10[i]);
@@ -324,23 +326,34 @@ public class EsqueletoRPG {
         lerString("Tecle ENTER para continuar...");
     }
 
+    /**
+     * Exibe a tela de introdução do quiz.
+     */
     public static void telaIntroducao() {
         desenharTela(TELA_INTRODUCAO);
         pausar();
     }
-    
-    // --- TELA DE SCORE (Obrigatório digitar 0 para voltar - Pedido 8) ---
+
+    /**
+     * Exibe a tela de recordes do jogo.
+     */
     public static void telaScore() {
         desenharTela(TELA_SCORE);
         pausar();
     }
 
+    /**
+     * Exibe a tela de saída e encerra o jogo.
+     */
     public static void sair() {
         desenharTela(TELA_SAIR);
         System.exit(0);
     }
 
-    // --- NOVA FUNÇÃO UNIFICADA QUE SUBSTITUI DESAFIO1, DESAFIO2... ---
+    /**
+     * Exibe a tela de desafio do quiz e realiza a lógica de pontuação.
+     * @param indiceAtual indice de qual desafio deve ser exibido.
+     */
     public static void jogarDesafio(int indiceAtual) {
         numeroDesafio = indiceAtual + 1;
         perguntaDesafio = PERGUNTAS[indiceAtual];
@@ -379,13 +392,11 @@ public class EsqueletoRPG {
         while (!acertou) {
             desenharTela(TELA_DESAFIO);
 
-            // Usando lerOpcoes ao invés de Scanner.nextInt resolve o erro das letras 
             int escolha = lerOpcoes("Diga sua resposta (ou 0 para regras)", new int[]{0, 1, 2, 3, 4});
 
             if(escolha == 0) {
                 telaRegras();
             } else if(escolha == resposta) {
-                // Acertou
                 acertou = true;
                 int pontosGanhos;
                 
@@ -400,8 +411,6 @@ public class EsqueletoRPG {
                 pontuacao += pontosGanhos;
 
                 System.out.println("\nResposta Certa! Você ganhou " + pontosGanhos + " pontos.");
-                
-                // Mensagem obrigatória não pulada pelo random (Pedido 6)
                 System.out.println("Você completou a missão atual com sucesso!\n\n");
                 pausar();
             } else {
@@ -413,7 +422,12 @@ public class EsqueletoRPG {
         }
     }
 
-    // --- FUNÇÃO PARA ORDENAR E SALVAR NO PLACAR ---
+    /**
+     * Salva o nome do jogador e sua pontuação no placar de recordes
+     * se a pontuação estiver entre as 10 melhores.
+     * @param nome nome que será salvo nos recordes.
+     * @param pontos pontuação do jogador que será salva.
+     */
     public static void salvarNoPlacar(String nome, int pontos) {
         totalScoresSalvos++; 
         
@@ -438,6 +452,14 @@ public class EsqueletoRPG {
         }
     }
 
+    /**
+     * Altera a ordem dos elementos nos vetores passados como parâmetros, servindo para embaralhar as questões com suas
+     * respectivas respostas e alternativas, mantendo-as sempre nos índices correspondentes.
+     * @param questoes vetor de String contendo as questões do quiz.
+     * @param alternativas matriz de String, contendo um vetor em cada posição com as alternativas incorretas para as
+     *                     respectivas questões
+     * @param respostas vetor de String contendo as respostas corretas das respectivas questões./
+     */
     public static void embaralharQuestoes(String[] questoes, String[][] alternativas, String[] respostas) {
         Random random = new Random();
 
@@ -462,6 +484,13 @@ public class EsqueletoRPG {
         return resposta >= 0 && resposta <= 4;
     }
 
+    /**
+     * Solicita entrada de um inteiro para o usuário que esteja dentro do array de opções válidas
+     * e reexibe a interface, solicitando novamente a entrada, caso o usuário insira valor inválido.
+     * @param textoParaEntrada texto para requisitar a entrada do usuário.
+     * @param valoresValidos valores permitidos e considerados válidos para a entrada.
+     * @return retorna o valor inteiro válido inserido pelo usuário.
+     */
     public static int lerOpcoes(String textoParaEntrada, int[] valoresValidos) {
         textoParaEntrada = adicionarDoisPontos(textoParaEntrada);
 
@@ -481,6 +510,10 @@ public class EsqueletoRPG {
         }
     }
 
+    /**
+     * Lida com o fluxo de erro, caso a entrada do usuário não tenha sido válida.
+     * @param msg mensagem para ser exibida para o usuário no caso de erro no valor inserido.
+     */
     public static void handleErro(String msg) {
         System.out.println(msg);
         System.out.println("\n");
@@ -488,12 +521,25 @@ public class EsqueletoRPG {
         desenharTela(telaAtual);
     }
 
+    /**
+     * Solicita a entrada para o usuário e devolve a string lida.
+     * @param textoParaEntrada texto para requisitar a entrada do usuário.
+     * @return retorna a string inserida pelo usuário.
+     */
     public static String lerString(String textoParaEntrada) {
         Scanner input = new Scanner(System.in);
         System.out.print(textoParaEntrada);
         return input.nextLine();
     }
 
+    /**
+     * Solicita entrada de uma string para o usuário que esteja dentro do array de opções válidas
+     * e reexibe a interface, solicitando novamente a entrada, caso o usuário insira valor inválido.
+     * @param textoParaEntrada texto para requisitar a entrada do usuário.
+     * @param valoresValidos valores permitidos e considerados válidos para a entrada.
+     * @param ignorarCaixa indica se deve diferenciar maiúsculas e minúsculas na comparação.
+     * @return retorna a string válida inserida pelo usuário.
+     */
     public static String lerOpcoes(String textoParaEntrada, String[] valoresValidos, boolean ignorarCaixa) {
         textoParaEntrada = adicionarDoisPontos(textoParaEntrada);
 
@@ -506,6 +552,12 @@ public class EsqueletoRPG {
         }
     }
 
+    /**
+     * Solicita entrada de uma string para o usuário que esteja dentro do padrão especificada (regex).
+     * @param textoParaEntrada texto para requisitar a entrada do usuário.
+     * @param pattern regex especificando o padrão de entrada esperado.
+     * @return retorna a string válida inserida pelo usuário.
+     */
     public static String lerComPadrao(String textoParaEntrada, String pattern) {
         textoParaEntrada = adicionarDoisPontos(textoParaEntrada);
 
@@ -518,16 +570,31 @@ public class EsqueletoRPG {
         }
     }
 
+    /**
+     * Verifica se o texto possui ": " no final, adicionando-o se não tiver.
+     * @param texto texto que vai ser verificado e formatado.
+     * @return o texto formatado com ": " no final.
+     */
     public static String adicionarDoisPontos(String texto) {
+        //retira os espaços do início e fim
         texto = texto.trim();
+
+        //verifica se não tem ':' no final
         if(!texto.matches("^.*:$")){
             texto += ": ";
         }else {
             texto += " ";
         }
+
         return texto;
     }
 
+    /**
+     * Busca um valor dentro de um array de inteiro e retorna true se for encontrado, senão retorna false.
+     * @param busca valor para ser procurado no array.
+     * @param fonte array no qual a procura será feita.
+     * @return true ou false se o valor foi encontrado.
+     */
     public static boolean contemValor(int busca, int[] fonte) {
         for(int valor : fonte) {
             if(valor == busca)
@@ -536,6 +603,13 @@ public class EsqueletoRPG {
         return false;
     }
 
+    /**
+     * Busca um valor dentro de um array de String e retorna true se for encontrado, senão retorna false.
+     * @param busca valor para ser procurado no array.
+     * @param fonte array no qual a procura será feita.
+     * @param ignorarCaixa indica se deve diferenciar maiúsculas e minúsculas na busca ou não.
+     * @return true ou false se o valor foi encontrado.
+     */
     public static boolean contemValor(String busca, String[] fonte, boolean ignorarCaixa) {
         for(String valor : fonte) {
             if(ignorarCaixa ? valor.equalsIgnoreCase(busca) : valor.equals(busca)) {
