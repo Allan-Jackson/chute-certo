@@ -298,7 +298,7 @@ public class EsqueletoRPG {
         limparTela();
         
         // Laço que passa por todas as 20 questões aleatorizadas
-        for(int i = 0; i < PERGUNTAS.length; i++) {
+        for(int i = 0; i < 1; i++) {
             jogarDesafio(i);
         }
 
@@ -307,7 +307,7 @@ public class EsqueletoRPG {
         System.out.println("FIM DE JOGO! Você concluiu todas as missões.");
         System.out.println("Sua pontuação final foi: " + pontuacao + " pontos.\n");
         
-        String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$").trim();
+        String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$", "Por favor, utilize somente letras!").trim();
 
         //pega apenas as 3 primeiras letras
         nome = nome.length() > 3 ? nome.substring(0, 3) : nome;
@@ -587,7 +587,7 @@ public class EsqueletoRPG {
     public static String lerComPadrao(String textoParaEntrada, String pattern) {
         return lerComPadrao(textoParaEntrada, pattern, "Opção inválida!");
     }
-    
+
     /**
      * Solicita entrada de uma string para o usuário que esteja dentro do padrão especificada (regex).
      * @param textoParaEntrada texto exibido ao solicitar a entrada.
