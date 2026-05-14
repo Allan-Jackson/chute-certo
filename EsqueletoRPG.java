@@ -319,7 +319,7 @@ public class EsqueletoRPG {
         // 2. Randomiza a ordem das alternativas
         Random random = new Random();
         for (int i = 0; i < opcoes.length; i++) {
-            int pos = random.nextInt(opcoes.length);
+            int pos = random.nextInt(opcoes.length-i) + i;
             String temp = opcoes[i];
             opcoes[i] = opcoes[pos];
             opcoes[pos] = temp;
