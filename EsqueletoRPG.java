@@ -354,20 +354,19 @@ public class EsqueletoRPG {
         System.out.println();
     }
 
-    /**
-     * Exibe as regras do jogo para o usuário
-     */
-    private static void desenharRegras() {
-        //código provisório com msg e volta para o menu inicial
-        System.out.println("\n\nREGRAS:\n\n");
-        System.out.println("1. Responda as perguntas digitando o valor das opções '1', '2', '3' ou '4'.");
-        System.out.println("2. Acertar de 1ª vale 10 pts, de 2ª vale 5 pts, de 3ª ou mais vale 2 pts.");
-        System.out.println("3. Digite 0 para ver estas regras durante um desafio.");
-        System.out.println("4. Ao final dos desafios digite seu nome para salvar na tabela de recordes.");
-        System.out.println("5. Convide seus amigos para jogar na mesma máquina e veja quem é o melhor.");
-        System.out.println("6. Não esqueça de se DIVERTIR!");
-        System.out.println("\n\n");
-    }
+	/**
+	 * Exibe as regras do jogo para o usuário
+	 */
+	private static void desenharRegras() {
+		//código provisório com msg e volta para o menu inicial
+		System.out.println("\n\nREGRAS:\n\n");
+		System.out.println("1. Responda as perguntas digitando o valor das opções 'A', 'B', 'C' ou 'D'.");
+		System.out.println("2. Cada resposta correta somará 10 pontos na pontuação.");
+		System.out.println("3. Ao final dos desafios digite seu nome para salvar na tabela de recordes.");
+		System.out.println("4. Convide seus amigos para jogar na mesma máquina e veja quem é o melhor.");
+		System.out.println("5. Não esqueça de se DIVERTIR!");
+		System.out.println("\n\n");
+	}
 
     /**
      * Desenha a tela de introdução ao iniciar o jogo.
