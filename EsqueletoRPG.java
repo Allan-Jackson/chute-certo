@@ -12,7 +12,6 @@ public class EsqueletoRPG {
 	 * Constante para guardar a quantidade de linhas para
 	 * pular para fazer uma mudança de tela.
 	 */
-
     public static final int ALTURA_TELA = 30;
 
     /**
@@ -30,7 +29,6 @@ public class EsqueletoRPG {
     /**
 	 * Variável que armazena o estado da tela atual do quiz.
 	 */
-
     public static int telaAtual = TELA_TITULO; // Ajustado para iniciar na tela titulo logicamente
 
     public static int pontuacao;
@@ -53,7 +51,6 @@ public class EsqueletoRPG {
 	 * dos desafios do quiz. Estão associados através da posição que ocupam no
 	 * vetor.
 	 */
-
     public static final String[] PERGUNTAS = {
             "Qual foi o primeiro computador eletromecânico construído pela IBM em 1944?",
             "Em Java, qual palavra-chave é usada para impedir que uma classe seja herdada?",
@@ -113,7 +110,6 @@ public class EsqueletoRPG {
 	/**
 	 * Configura variáveis e reseta valores necessários para jogo.
 	 */
-
     public static void setup() {
         pontuacao = 0;
         embaralharQuestoes(PERGUNTAS, ALTERNATIVAS, RESPOSTAS);
@@ -163,24 +159,22 @@ public class EsqueletoRPG {
 	 * Desenha na tela o título do jogo em ASCII Art
 	 */
     public static void desenharLogo() {
+        System.out.println("..######..##.....##.##.....##.########.########.....######..########.########..########..#######.");
+        System.out.println(".##....##.##.....##.##.....##....##....##..........##....##.##.......##.....##....##....##.....##");
+        System.out.println(".##.......##.....##.##.....##....##....##..........##.......##.......##.....##....##....##.....##");
+        System.out.println(".##.......#########.##.....##....##....######......##.......######...########.....##....##.....##");
+        System.out.println(".##.......##.....##.##.....##....##....##..........##.......##.......##...##......##....##.....##");
+        System.out.println(".##....##.##.....##.##.....##....##....##..........##....##.##.......##....##.....##....##.....##");
+        System.out.println("..######..##.....##..#######.....##....########.....######..########.##.....##....##.....#######.");
         System.out.println();
-        System.out.println("                        BY                        ");
-        System.out.println("             ALLAN JACKSON SILVA OLIVEIRA             ");
-        System.out.println("      ____  ______   _________  ______   ___      ");
-        System.out.println("     |    |/      \\ /         \\/      \\ /   \\ ");
-        System.out.println("     |    |   __   |  ______|   __   |     |    ");
-        System.out.println("     |    |  |  |  |   |____|  |  |  |     |    ");
-        System.out.println("     |    |  |  |  |   /_   \\  |  |  |\\___/   ");
-        System.out.println("   __|    |  \\__/  |   |___|  |  |__|  | ___     ");
-        System.out.println("  |       |        |          |        |/   \\   ");
-        System.out.println("   \\_____/ \\______/ \\_________/\\______/ \\___/");
+        System.out.println("-------------------------------------------------------------------------------------------------");
+        System.out.println();
     }
 
     /**
 	 * Desenha o MENU INICIAL com as opções para o usuário.
 	 */
     public static void desenharMenuTitulo() {
-        System.out.println("\n-----------------------------------------------\n");
         System.out.println("[1] -> Iniciar jogo");
         System.out.println("[2] -> Ler regras");
         System.out.println("[3] -> Ver Placar de Score");
