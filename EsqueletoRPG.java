@@ -315,20 +315,24 @@ public class EsqueletoRPG {
         telaScore();
     }
 
-    private static void telaRegras() {
+    public static void telaRegras() {
         desenharTela(TELA_REGRAS);
+        pausar();
+    }
+
+    public static void pausar() {
         lerString("Tecle ENTER para continuar...");
     }
 
     public static void telaIntroducao() {
         desenharTela(TELA_INTRODUCAO);
-        lerString("Tecle ENTER para continuar...");
+        pausar();
     }
     
     // --- TELA DE SCORE (Obrigatório digitar 0 para voltar - Pedido 8) ---
     public static void telaScore() {
         desenharTela(TELA_SCORE);
-        lerOpcoes("Digite 0 para voltar ao menu principal", new int[]{0});
+        pausar();
     }
 
     public static void sair() {
@@ -398,14 +402,13 @@ public class EsqueletoRPG {
                 System.out.println("\nResposta Certa! Você ganhou " + pontosGanhos + " pontos.");
                 
                 // Mensagem obrigatória não pulada pelo random (Pedido 6)
-                System.out.println("Você completou a missão atual com sucesso!");
-                lerString("Aperte ENTER para continuar para a próxima...");
-                limparTela();
+                System.out.println("Você completou a missão atual com sucesso!\n\n");
+                pausar();
             } else {
                 // Errou
                 tentativas++;
                 System.out.println("\nResposta Incorreta! Você sofreu um ataque, mas pode tentar de novo.");
-                lerString("Aperte ENTER para tentar novamente na mesma questão...");
+                pausar();
             }
         }
     }
@@ -480,6 +483,8 @@ public class EsqueletoRPG {
 
     public static void handleErro(String msg) {
         System.out.println(msg);
+        System.out.println("\n");
+        pausar();
         desenharTela(telaAtual);
     }
 
