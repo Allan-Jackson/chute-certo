@@ -419,7 +419,7 @@ public class EsqueletoRPG {
 
         for (int i = 0; i < 10; i++) {
             if (nomesTop10[i] != null) {
-                System.out.printf("%2dº Lugar: %s - %3d pts\n", (i + 1), nomesTop10[i].toUpperCase(), pontosTop10[i]);
+                System.out.printf("%2dº Lugar: %-3s - %3d pts\n", (i + 1), nomesTop10[i].toUpperCase(), pontosTop10[i]);
             } else {
                 System.out.printf("%2dº Lugar: ---\n", (i + 1));
             }
