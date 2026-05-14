@@ -265,7 +265,7 @@ public class EsqueletoRPG {
         
         for (int i = 0; i < 10; i++) {
             if (nomesTop10[i] != null) {
-                System.out.println((i + 1) + "º Lugar: " + nomesTop10[i] + " - " + pontosTop10[i] + " pts");
+                System.out.println((i + 1) + "º Lugar: " + nomesTop10[i].toUpperCase() + " - " + pontosTop10[i] + " pts");
             } else {
                 System.out.println((i + 1) + "º Lugar: ---");
             }
