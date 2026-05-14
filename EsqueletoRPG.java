@@ -119,41 +119,29 @@ public class EsqueletoRPG {
         embaralharQuestoes(PERGUNTAS, ALTERNATIVAS, RESPOSTAS);
     }
 
-    public static void telaTitulo() {
-        desenharTela(TELA_TITULO);
-
-        
-	/**
+    /**
 	 * Exibe a tela de título do jogo
 	 * com o logo e o menu inicial.
 	 */
-
+    public static void telaTitulo() {
         while(true) {
-            // Opção 3 adicionada para o Placar
+            desenharTela(TELA_TITULO);
+
             int op = lerOpcoes("Escolha", new int[]{1, 2, 3, 4});
-            limparTela();
 
             switch (op) {
-                case 1 -> {iniciarJogo();
-                desenharTela(TELA_TITULO);}
-
-                case 2 -> {
-                    telaRegras();
-                    desenharTela(TELA_TITULO);
-                }
-                case 3 -> {
-                    telaScore(); // Chama a nova tela
-                    desenharTela(TELA_TITULO);
-                }
+                case 1 -> iniciarJogo();
+                case 2 -> telaRegras();
+                case 3 -> telaScore();
                 case 4 -> sair();
             }
         }
     }
 
-/**
- * Desenha uma tela específica do quiz, utilizando uma ou mais funções de desenhar.
- * @param codigoTela número que indica a tela a ser desenhada.
- */
+    /**
+     * Desenha uma tela específica do quiz, utilizando uma ou mais funções de desenhar.
+     * @param codigoTela número que indica a tela a ser desenhada.
+     */
     public static void desenharTela(int codigoTela) {
         telaAtual = codigoTela;
 
@@ -166,10 +154,11 @@ public class EsqueletoRPG {
             }
             case TELA_REGRAS -> desenharRegras();
             case TELA_INTRODUCAO -> desenharIntroducao();
-            case TELA_SCORE -> desenharScore(); // Adicionado no Switch do grupo
+            case TELA_SCORE -> desenharScore();
             case TELA_SAIR -> desenharSair();
         }
     }
+
     /**
 	 * Desenha na tela o título do jogo em ASCII Art
 	 */
@@ -198,7 +187,7 @@ public class EsqueletoRPG {
         System.out.println("[4] -> Sair");
     }
 
-        /**
+    /**
 	 * Desenha na tela o título do jogo em ASCII Art
 	 */
     public static void desenharDesafio() {
@@ -213,7 +202,8 @@ public class EsqueletoRPG {
         System.out.println("4) " + opcao4);
         System.out.println();
     }
-/**
+
+    /**
 	 * Exibe as regras do jogo para o usuário
 	 */
     private static void desenharRegras() {
@@ -254,7 +244,7 @@ public class EsqueletoRPG {
         }
         System.out.println("=================================\n");
     }
-/**
+    /**
 	 * Desenha a tela de saída do jogo.
 	 */
     public static void desenharSair() {
