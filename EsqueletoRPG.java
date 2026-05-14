@@ -480,10 +480,6 @@ public class EsqueletoRPG {
         }
     }
 
-    public static boolean validarResposta(int resposta) {
-        return resposta >= 0 && resposta <= 4;
-    }
-
     /**
      * Solicita entrada de um inteiro para o usuário que esteja dentro do array de opções válidas
      * e reexibe a interface, solicitando novamente a entrada, caso o usuário insira valor inválido.
