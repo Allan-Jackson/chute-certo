@@ -74,34 +74,50 @@ public class EsqueletoRPG {
             "Qual operador Java é usado para comparar a igualdade de dois valores primitivos?"
     };
 
-    public static final String[] RESPOSTAS = {
-            "1Harvard Mark I", "1final", "1Mão em B", "1Ada Lovelace", "01",
-            "1Charles Babbage", "1Recursividade", "1Para baixo (duas vezes)", "11970", "1git log",
-            "1Collection", "1ª Geração", "1Peito", "1Ignorar arquivos no commit", "1Pascalina",
-            "1ArrayIndexOutOfBoundsException", "1Sim, obrigatório", "1A estrutura interna de dados", "1Alan Turing", "1=="
-    };
-    public static final String[][] ALTERNATIVAS = {
-            {"ENIAC", "Z3", "UNIVAC"},
-            {"static", "abstract", "private"},
-            {"Mão em 5", "Mão em L", "Mão em S"},
-            {"Grace Hopper", "Margaret Hamilton", "Joan Clarke"},
-            {"-1", "null", "1"},
-            {"Alan Turing", "Blaise Pascal", "John von Neumann"},
-            {"Polimorfismo", "Herança", "Encapsulamento"},
-            {"Para cima", "Circular", "Para os lados"},
-            {"1960", "1980", "1950"},
-            {"git commit", "git status", "git show"},
-            {"Map", "Iterable", "ArrayList"},
-            {"2ª Geração", "3ª Geração", "4ª Geração"},
-            {"Cabeça", "Mão oposta", "Braço"},
-            {"Excluir arquivos do PC", "Deletar branches", "Esconder senhas da IDE"},
-            {"Ábaco", "Step Reckoner", "Diferencial"},
-            {"Retorna 0", "Retorna null", "Erro de Compilação"},
-            {"Não, é opcional", "Apenas em sinais de dor", "Só para verbos"},
-            {"O ArrayList é mais lento", "O LinkedList não aceita Strings", "Não há diferença"},
-            {"Steve Jobs", "Bill Gates", "Linus Torvalds"},
-            {"=", "equals()", "==="}
-    };
+	public static final String[] RESPOSTAS = {
+			"Harvard Mark I",
+			"final",
+			"Mão em B",
+			"Ada Lovelace",
+			"0",
+			"Charles Babbage",
+			"Recursividade",
+			"Para baixo (duas vezes)",
+			"1970",
+			"git log",
+			"Collection",
+			"1ª Geração",
+			"Peito",
+			"Ignorar arquivos no commit",
+			"Pascalina",
+			"ArrayIndexOutOfBoundsException",
+			"Sim, obrigatório",
+			"A estrutura interna de dados",
+			"Alan Turing",
+			"=="
+	};
+	public static final String[][] ALTERNATIVAS = {
+			{"ENIAC", "Z3", "UNIVAC"},
+			{"static", "abstract", "private"},
+			{"Mão em 5", "Mão em L", "Mão em S"},
+			{"Grace Hopper", "Margaret Hamilton", "Joan Clarke"},
+			{"-1", "null", "1"},
+			{"Alan Turing", "Blaise Pascal", "John von Neumann"},
+			{"Polimorfismo", "Herança", "Encapsulamento"},
+			{"Para cima", "Circular", "Para os lados"},
+			{"1960", "1980", "1950"},
+			{"git commit", "git status", "git show"},
+			{"Map", "Iterable", "ArrayList"},
+			{"2ª Geração", "3ª Geração", "4ª Geração"},
+			{"Cabeça", "Mão oposta", "Braço"},
+			{"Excluir arquivos do PC", "Deletar branches", "Esconder senhas da IDE"},
+			{"Ábaco", "Step Reckoner", "Diferencial"},
+			{"Retorna 0", "Retorna null", "Erro de Compilação"},
+			{"Não, é opcional", "Apenas em sinais de dor", "Só para verbos"},
+			{"O ArrayList é mais lento", "O LinkedList não aceita Strings", "Não há diferença"},
+			{"Steve Jobs", "Bill Gates", "Linus Torvalds"},
+			{"=", "equals()", "==="}
+	};
 
     public static void main(String[] args) {
         telaTitulo();
