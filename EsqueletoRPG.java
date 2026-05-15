@@ -203,9 +203,11 @@ public class EsqueletoRPG {
         //pega apenas as 3 primeiras letras
         nome = nome.length() > 3 ? nome.substring(0, 3) : nome;
 
-        salvarNoPlacar(nome, pontuacao);
+        //salva a pontuação nos recordes se estiver no top 10
+        boolean scoreSalvo = salvarNoPlacar(nome, pontuacao);
 
-        telaScore();
+        desenharTela(TELA_SCORE);
+        desenharResultado(scoreSalvo);
     }
 
     /**
@@ -256,7 +258,7 @@ public class EsqueletoRPG {
         // 3. Descobre em qual numero a resposta certa caiu
         for (int i = 0; i < 4; i++) {
             if (opcoes[i].equals(RESPOSTAS[indiceAtual])) {
-                resposta = i + 1; 
+                resposta = i + 1;
             }
         }
 
@@ -264,8 +266,6 @@ public class EsqueletoRPG {
 
         //recebe a entrada como letra
         String escolhaLetra = lerOpcoes("Diga sua resposta", new String[]{"A", "B", "C", "D"}, true, "\nDigite 'A', 'B', 'C' ou 'D' para escolher uma alternativa.").toUpperCase();
-
-        System.out.println("escolhaLetra: " + escolhaLetra);
 
         //mapeia a letra para o valor numérico correspondente
         int escolhaNum = switch (escolhaLetra) {
@@ -343,9 +343,9 @@ public class EsqueletoRPG {
      * Desenha o MENU INICIAL com as opções para o usuário.
      */
     public static void desenharMenuTitulo() {
-        System.out.println("[1] -> Iniciar jogo");
-        System.out.println("[2] -> Ler regras");
-        System.out.println("[3] -> Ver Placar de Score");
+        System.out.println("[1] -> Iniciar Partida");
+        System.out.println("[2] -> Ler Regras");
+        System.out.println("[3] -> Ver Placar de Líderes");
         System.out.println("[4] -> Sair");
     }
 
@@ -399,6 +399,19 @@ public class EsqueletoRPG {
         System.out.println("Sua pontuação foi de " + pontuacao + " pontos!\n");
     }
 
+    /**
+     * Desenha a mensagem de sucesso ou falha ao tentar entrar no Placar de Líderes
+     * @param entrouNoPlacar informa se o jogador conseguiu ser salvo no placar.
+     */
+    public static void desenharResultado(boolean entrouNoPlacar) {
+        if(entrouNoPlacar) {
+            System.out.println("\nIncrível! Você garantiu o seu lugar no Top 10!\n\n");
+        } else{
+            System.out.println("Você não conseguiu se classificar no placar de líderes dessa vez...");
+            System.out.println("Não desista! Estude mais e tente novamente!\n\n");
+        }
+        pausar();
+    }
 
     /**
      * Desenha a tela de score do jogo.
@@ -445,11 +458,11 @@ public class EsqueletoRPG {
      * @param nome nome que será salvo nos recordes.
      * @param pontos pontuação do jogador que será salva.
      */
-    public static void salvarNoPlacar(String nome, int pontos) {
-        totalScoresSalvos++; 
-        
+    public static boolean salvarNoPlacar(String nome, int pontos) {
+        totalScoresSalvos++;
+
         int posicaoParaEntrar = -1;
-        
+
         // Verifica se a pontuação bate os 10 melhores
         for (int i = 0; i < 10; i++) {
             if (nomesTop10[i] == null || pontos > pontosTop10[i]) {
@@ -457,7 +470,7 @@ public class EsqueletoRPG {
                 break;
             }
         }
-        
+
         // Empurra os de baixo e insere o novo campeão
         if (posicaoParaEntrar != -1) {
             for (int i = 9; i > posicaoParaEntrar; i--) {
@@ -466,7 +479,11 @@ public class EsqueletoRPG {
             }
             nomesTop10[posicaoParaEntrar] = nome;
             pontosTop10[posicaoParaEntrar] = pontos;
+            return true; //salvo com sucesso
         }
+
+        //pontuação não salva
+        return false;
     }
 
     /**
