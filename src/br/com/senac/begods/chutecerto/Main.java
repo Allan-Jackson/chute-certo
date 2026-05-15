@@ -3,10 +3,12 @@ package src.br.com.senac.begods.chutecerto;
 import java.util.Random;
 import java.util.Scanner;
 
-/** ESQUELETO BASE PARA UM RPG QUIZ-STYLE NO TERMINAL
- * A ideia aqui é apenas ter a mecânica de como o jogo
- * se comportaria, sem preocupação com a história ou os
- * dados utilizados por enquanto
+/**
+ * JOGO CHUTE-CERTO
+ * Jogo no formato de quiz sobre a copa do mundo
+ * voltado para crianças e jovens do ensino fundamental
+ * para o ensino pedagógico envolvendo disciplinas básicas
+ * como Português, Matemática, Geografia, História e Conhecimentos Gerais.
 */
 public class Main {
 
@@ -36,7 +38,9 @@ public class Main {
 	 */
     public static int telaAtual = TELA_TITULO; // Ajustado para iniciar na tela titulo logicamente
 
-
+    /**
+     * variáveis para armazenas informações do desafio atual
+     */
     public static int numeroDesafio;
     public static String perguntaDesafio;
     public static String opcao1;
@@ -45,14 +49,17 @@ public class Main {
     public static String opcao4;
     public static int resposta;
 
+    /**
+     * controla o estado de exibição da pontuação no score no final da partida
+     */
     public static boolean fimDaPartida = false;
 
-    // --- NOVAS VARIÁVEIS PARA O SISTEMA DE SCORE (Pedidos 4 e 9) ---
+    /**
+     * variáveis para armazenar os dados do score
+     */
     public static String[] nomesTop10 = new String[10];
     public static int[] pontosTop10 = new int[10];
     public static int pontuacao;
-
-
 
     /**
 	 * Estrutura de dados para armazenar as questões, alternativas e respostas
@@ -160,6 +167,9 @@ public class Main {
         }
     }
 
+    /**
+     * Realiza o fluxo principal de uma partida do quiz.
+     */
     public static void iniciarJogo() {
         setup();
         telaIntroducao();
