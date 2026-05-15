@@ -262,9 +262,20 @@ public class EsqueletoRPG {
 
         desenharTela(TELA_DESAFIO);
 
-        int escolha = lerOpcoes("Diga sua resposta: ", new int[]{1, 2, 3, 4});
+        //recebe a entrada como letra
+        String escolhaLetra = lerOpcoes("Diga sua resposta", new String[]{"A", "B", "C", "D"}, true, "\nDigite 'A', 'B', 'C' ou 'D' para escolher uma alternativa.").toUpperCase();
 
-        if(escolha == resposta) {
+        System.out.println("escolhaLetra: " + escolhaLetra);
+
+        //mapeia a letra para o valor numérico correspondente
+        int escolhaNum = switch (escolhaLetra) {
+            case "A" -> 1;
+            case "B" -> 2;
+            case "C" -> 3;
+            default -> 4;
+        };
+
+        if(escolhaNum == resposta) {
             pontuacao += 10;
 
             System.out.println("\nGOOOOOOOOOOL!!!");
@@ -347,10 +358,10 @@ public class EsqueletoRPG {
         System.out.println("---------");
         System.out.println(perguntaDesafio);
         System.out.println("---------");
-        System.out.println("1) " + opcao1);
-        System.out.println("2) " + opcao2);
-        System.out.println("3) " + opcao3);
-        System.out.println("4) " + opcao4);
+        System.out.println("A) " + opcao1);
+        System.out.println("B) " + opcao2);
+        System.out.println("C) " + opcao3);
+        System.out.println("D) " + opcao4);
         System.out.println();
     }
 
