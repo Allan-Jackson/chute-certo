@@ -10,6 +10,10 @@ import java.util.Scanner;
 */
 public class Main {
 
+    // =========================================================================
+    //                   CONSTANTES E VARIÁVEIS DE ESTADO
+    // =========================================================================
+
     /**
 	 * Constante para guardar a quantidade de linhas para
 	 * pular para fazer uma mudança de tela.
@@ -123,42 +127,18 @@ public class Main {
 			{"=", "equals()", "==="}
 	};
 
+    // =========================================================================
+    //                         FLUXO PRINCIPAL
+    // =========================================================================
+
     public static void main(String[] args) {
         telaTitulo();
     }
 
     /**
-     * Espera o usuário digitar "Enter" para continuar o jogo.
+     * Exibe a tela de título do jogo
+     * com o logo e o menu inicial.
      */
-    public static void pausar() {
-        lerString("Tecle ENTER para continuar...");
-    }
-
-	/**
-	 * Configura variáveis e reseta valores necessários para jogo.
-	 */
-    public static void setup() {
-        pontuacao = 0;
-        embaralharQuestoes(PERGUNTAS, ALTERNATIVAS, RESPOSTAS);
-    }
-
-    public static void iniciarJogo() {
-        setup();
-        telaIntroducao();
-        limparTela();
-
-        // Laço que passa por todas as 20 questões aleatorizadas
-        for(int i = 0; i < PERGUNTAS.length; i++) {
-            telaDesafio(i);
-        }
-
-        telaFinalizar();
-    }
-
-    /**
-	 * Exibe a tela de título do jogo
-	 * com o logo e o menu inicial.
-	 */
     public static void telaTitulo() {
         //Não limpa a tela na primeira renderização
         boolean limparTela = false;
@@ -180,59 +160,25 @@ public class Main {
         }
     }
 
-    /**
-     * Exibe a tela de regras do jogo.
-     */
-    public static void telaRegras() {
-        desenharTela(TELA_REGRAS);
-        pausar();
+    public static void iniciarJogo() {
+        setup();
+        telaIntroducao();
+        limparTela();
+
+        // Laço que passa por todas as 20 questões aleatorizadas
+        for(int i = 0; i < PERGUNTAS.length; i++) {
+            telaDesafio(i);
+        }
+
+        telaFinalizar();
     }
 
-    /**
-     * Exibe a tela de introdução do quiz.
-     */
-    public static void telaIntroducao() {
-        desenharTela(TELA_INTRODUCAO);
-        pausar();
-    }
-
-    /**
-     * Exibe a tela de final do quiz, pega o nome do usuário, salva e mostra o placar
-     */
-    public static void telaFinalizar() {
-        //controle de exibição da pontuação na tela de score no fim da partida
-        fimDaPartida = true;
-
-        desenharTela(TELA_FINALIZAR);
-
-        String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$", "Por favor, utilize somente letras!").trim();
-
-        //pega apenas as 3 primeiras letras
-        nome = nome.length() > 3 ? nome.substring(0, 3) : nome;
-
-        //salva a pontuação nos recordes se estiver no top 10
-        boolean scoreSalvo = salvarNoPlacar(nome, pontuacao);
-
-        desenharTela(TELA_SCORE);
-        desenharResultado(scoreSalvo);
-
-        fimDaPartida = false;
-    }
-
-    /**
-     * Exibe a tela de recordes do jogo.
-     */
-    public static void telaScore() {
-        desenharTela(TELA_SCORE);
-        pausar();
-    }
-
-    /**
-     * Exibe a tela de saída e encerra o jogo.
-     */
-    public static void sair() {
-        desenharTela(TELA_SAIR);
-        System.exit(0);
+	/**
+	 * Configura variáveis e reseta valores necessários para jogo.
+	 */
+    public static void setup() {
+        pontuacao = 0;
+        embaralharQuestoes(PERGUNTAS, ALTERNATIVAS, RESPOSTAS);
     }
 
     /**
@@ -297,6 +243,67 @@ public class Main {
 
         pausar();
     }
+
+    /**
+     * Exibe a tela de introdução do quiz.
+     */
+    public static void telaIntroducao() {
+        desenharTela(TELA_INTRODUCAO);
+        pausar();
+    }
+
+    /**
+     * Exibe a tela de regras do jogo.
+     */
+    public static void telaRegras() {
+        desenharTela(TELA_REGRAS);
+        pausar();
+    }
+
+    /**
+     * Exibe a tela de recordes do jogo.
+     */
+    public static void telaScore() {
+        desenharTela(TELA_SCORE);
+        pausar();
+    }
+
+    /**
+     * Exibe a tela de final do quiz, pega o nome do usuário, salva e mostra o placar
+     */
+    public static void telaFinalizar() {
+        //controle de exibição da pontuação na tela de score no fim da partida
+        fimDaPartida = true;
+
+        desenharTela(TELA_FINALIZAR);
+
+        String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$", "Por favor, utilize somente letras!").trim();
+
+        //pega apenas as 3 primeiras letras
+        nome = nome.length() > 3 ? nome.substring(0, 3) : nome;
+
+        //salva a pontuação nos recordes se estiver no top 10
+        boolean scoreSalvo = salvarNoPlacar(nome, pontuacao);
+
+        desenharTela(TELA_SCORE);
+        desenharResultado(scoreSalvo);
+
+        fimDaPartida = false;
+    }
+
+    /**
+     * Exibe a tela de saída e encerra o jogo.
+     */
+    public static void sair() {
+        desenharTela(TELA_SAIR);
+        System.exit(0);
+    }
+
+
+
+    // =========================================================================
+    //                         SISTEMA DE RENDERIZAÇÃO
+    // =========================================================================
 
     /**
      * Desenha uma tela específica do quiz, limpando a tela antes por padrão.
@@ -374,19 +381,19 @@ public class Main {
         System.out.println();
     }
 
-	/**
-	 * Exibe as regras do jogo para o usuário
-	 */
-	private static void desenharRegras() {
-		//código provisório com msg e volta para o menu inicial
-		System.out.println("\n\nREGRAS:\n\n");
-		System.out.println("1. Responda as perguntas digitando o valor das opções 'A', 'B', 'C' ou 'D'.");
-		System.out.println("2. Cada resposta correta somará 10 pontos na pontuação.");
-		System.out.println("3. Ao final dos desafios digite seu nome para salvar na tabela de recordes.");
-		System.out.println("4. Convide seus amigos para jogar na mesma máquina e veja quem é o melhor.");
-		System.out.println("5. Não esqueça de se DIVERTIR!");
-		System.out.println("\n\n");
-	}
+    /**
+     * Exibe as regras do jogo para o usuário
+     */
+    private static void desenharRegras() {
+        //código provisório com msg e volta para o menu inicial
+        System.out.println("\n\nREGRAS:\n\n");
+        System.out.println("1. Responda as perguntas digitando o valor das opções 'A', 'B', 'C' ou 'D'.");
+        System.out.println("2. Cada resposta correta somará 10 pontos na pontuação.");
+        System.out.println("3. Ao final dos desafios digite seu nome para salvar na tabela de recordes.");
+        System.out.println("4. Convide seus amigos para jogar na mesma máquina e veja quem é o melhor.");
+        System.out.println("5. Não esqueça de se DIVERTIR!");
+        System.out.println("\n\n");
+    }
 
     /**
      * Desenha a tela de introdução ao iniciar o jogo.
@@ -453,16 +460,9 @@ public class Main {
         System.out.println("\n\nAté mais!\n\n");
     }
 
-    /**
-     * Limpa a tela do terminal.
-     * Limpa a tela imprimindo várias quebras de linhas vazias
-     * até encher a tela atual do usuário
-     */
-    public static void limparTela() {
-        for(int i = 0; i < ALTURA_TELA; i++) {
-            System.out.println();
-        }
-    }
+    // =========================================================================
+    //                         LÓGICA DE NEGÓCIO E DADOS
+    // =========================================================================
 
     /**
      * Salva o nome do jogador e sua pontuação no placar de recordes
@@ -524,6 +524,28 @@ public class Main {
         }
     }
 
+    // =========================================================================
+    //                         UTILIDADES E VALIDAÇÃO DE ENTRADA
+    // =========================================================================
+
+    /**
+     * Espera o usuário digitar "Enter" para continuar o jogo.
+     */
+    public static void pausar() {
+        lerString("Tecle ENTER para continuar...");
+    }
+
+    /**
+     * Limpa a tela do terminal.
+     * Limpa a tela imprimindo várias quebras de linhas vazias
+     * até encher a tela atual do usuário
+     */
+    public static void limparTela() {
+        for(int i = 0; i < ALTURA_TELA; i++) {
+            System.out.println();
+        }
+    }
+
     /**
      * Solicita a entrada de um inteiro válido, utilizando uma mensagem de erro padrão.
      * * <p>Este é um método de conveniência que chama
@@ -561,28 +583,6 @@ public class Main {
             }
             handleErro(erroFormato ? "Erro: digite um número!" : mensagemErro);
         }
-    }
-
-    /**
-     * Lida com o fluxo de erro, caso a entrada do usuário não tenha sido válida.
-     * @param msg mensagem para ser exibida para o usuário no caso de erro no valor inserido.
-     */
-    public static void handleErro(String msg) {
-        System.out.println(msg);
-        System.out.println("\n");
-        pausar();
-        desenharTela(telaAtual);
-    }
-
-    /**
-     * Solicita a entrada para o usuário e devolve a string lida.
-     * @param textoParaEntrada texto para requisitar a entrada do usuário.
-     * @return retorna a string inserida pelo usuário.
-     */
-    public static String lerString(String textoParaEntrada) {
-        Scanner input = new Scanner(System.in);
-        System.out.print(textoParaEntrada);
-        return input.nextLine();
     }
 
     /**
@@ -648,6 +648,28 @@ public class Main {
             }
             handleErro(mensagemErro);
         }
+    }
+
+    /**
+     * Solicita a entrada para o usuário e devolve a string lida.
+     * @param textoParaEntrada texto para requisitar a entrada do usuário.
+     * @return retorna a string inserida pelo usuário.
+     */
+    public static String lerString(String textoParaEntrada) {
+        Scanner input = new Scanner(System.in);
+        System.out.print(textoParaEntrada);
+        return input.nextLine();
+    }
+
+    /**
+     * Lida com o fluxo de erro, caso a entrada do usuário não tenha sido válida.
+     * @param msg mensagem para ser exibida para o usuário no caso de erro no valor inserido.
+     */
+    public static void handleErro(String msg) {
+        System.out.println(msg);
+        System.out.println("\n");
+        pausar();
+        desenharTela(telaAtual);
     }
 
     /**
