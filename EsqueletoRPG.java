@@ -31,7 +31,6 @@ public class EsqueletoRPG {
 	 */
     public static int telaAtual = TELA_TITULO; // Ajustado para iniciar na tela titulo logicamente
 
-    public static int pontuacao;
 
     public static int numeroDesafio;
     public static String perguntaDesafio;
@@ -41,10 +40,14 @@ public class EsqueletoRPG {
     public static String opcao4;
     public static int resposta;
 
+    public static boolean fimDaPartida = false;
+
     // --- NOVAS VARIÁVEIS PARA O SISTEMA DE SCORE (Pedidos 4 e 9) ---
     public static String[] nomesTop10 = new String[10];
     public static int[] pontosTop10 = new int[10];
-    public static int totalScoresSalvos = 0; // Mostra quantos jogaram
+    public static int pontuacao;
+
+
 
     /**
 	 * Estrutura de dados para armazenar as questões, alternativas e respostas
@@ -196,6 +199,9 @@ public class EsqueletoRPG {
      * Exibe a tela de final do quiz, pega o nome do usuário, salva e mostra o placar
      */
     public static void telaFinalizar() {
+        //controle de exibição da pontuação na tela de score no fim da partida
+        fimDaPartida = true;
+
         desenharTela(TELA_FINALIZAR);
 
         String nome = lerComPadrao("Digite seu nome para o Placar: ", "^(?=.*[A-Za-z])[A-Za-z ]+$", "Por favor, utilize somente letras!").trim();
@@ -208,6 +214,8 @@ public class EsqueletoRPG {
 
         desenharTela(TELA_SCORE);
         desenharResultado(scoreSalvo);
+
+        fimDaPartida = false;
     }
 
     /**
@@ -420,8 +428,11 @@ public class EsqueletoRPG {
         System.out.println("=================================");
         System.out.println("          TOP 10 SCORES          ");
         System.out.println("=================================");
-        System.out.println("Jogadores que já participaram: " + totalScoresSalvos);
-        System.out.println("---------------------------------");
+
+        if(fimDaPartida) {
+            System.out.println("Sua pontuação: " + pontuacao);
+            System.out.println("---------------------------------");
+        }
 
         for (int i = 0; i < 10; i++) {
             if (nomesTop10[i] != null) {
@@ -459,8 +470,6 @@ public class EsqueletoRPG {
      * @param pontos pontuação do jogador que será salva.
      */
     public static boolean salvarNoPlacar(String nome, int pontos) {
-        totalScoresSalvos++;
-
         int posicaoParaEntrar = -1;
 
         // Verifica se a pontuação bate os 10 melhores
