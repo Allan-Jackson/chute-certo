@@ -134,6 +134,9 @@ public class Main {
 			{"=", "equals()", "==="}
 	};
 
+    public static final Scanner ENTRADA = new Scanner(System.in);
+
+
     // =========================================================================
     //                         FLUXO PRINCIPAL
     // =========================================================================
@@ -666,9 +669,8 @@ public class Main {
      * @return retorna a string inserida pelo usuário.
      */
     public static String lerString(String textoParaEntrada) {
-        Scanner input = new Scanner(System.in);
         System.out.print(textoParaEntrada);
-        return input.nextLine();
+        return ENTRADA.nextLine();
     }
 
     /**
