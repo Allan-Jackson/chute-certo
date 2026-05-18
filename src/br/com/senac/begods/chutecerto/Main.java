@@ -1,4 +1,4 @@
-package src.br.com.senac.begods.chutecerto;
+package br.com.senac.begods.chutecerto;
 
 import java.util.Random;
 import java.util.Scanner;
